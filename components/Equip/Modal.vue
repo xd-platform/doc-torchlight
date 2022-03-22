@@ -1,0 +1,142 @@
+<template>
+  <div class="inventory-detail">
+    <div class="icon-box">
+      <div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
+    </div>
+    <div class="detail-box">
+      <div class="info">
+        <div class="name">{{ info.Name }}</div>
+        <div class="des">
+          <div class="needLevel">{{ locale.needLevel }} {{ info.NeedLevel }}</div>
+          <div class="type">{{ info.WeaponType }}</div>
+        </div>
+      </div>
+      <div class="base">
+        <div class="title">{{ locale.baseAffix }}</div>
+        <ul class="baseAffix" v-if="info.BaseAffix">
+          <li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc"></li>
+        </ul>
+      </div>
+      <div class="detail">
+        <equip-affix-list v-if="info.DetailAffix" :info="info.DetailAffix"></equip-affix-list>
+      </div>
+      <div class="desc" v-html="info.Desc">{{getLocale}}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState, mapGetters } from 'vuex';
+
+export default {
+  props: {
+    info: {
+      typeof: Object,
+      default: () => {}
+    },
+  },
+  computed: {
+    ...mapState(['lang']),
+    ...mapGetters(['getLocale']),
+    locale() {
+      return {
+        needLevel: this.getLocale('needLevel'),
+        baseAffix: this.getLocale('baseAffix')
+      }
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.inventory-detail {
+  position: relative;
+  width: 324px;
+  .icon-box {
+    width: 76px;
+    height: 76px;
+    border-radius: 0 12px;
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    margin-left: -38px;
+    background: linear-gradient(135.2deg, #8F5E36 0%, #DD8C51 99.92%);
+    border: 5px solid #0B0B0B;
+    .icon {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 85% 85%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .detail-box {
+    // position: absolute;
+    margin-top: 38px;
+    width: 100%;
+    background-color: #1a1a1a;
+    padding: 11px;
+    border-radius: 0 25px;
+    .info {
+      padding: 33px 0 12px;
+      border: 1px solid #333;
+      border-radius: 0 20px 0 0;
+      .name {
+        color: #FFC130;
+        font-size: 19px;
+        font-weight: bolder;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+      .des {
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
+        color: #BFBFBF;
+        .needLevel,
+        .type {
+          height: 23px;
+          line-height: 22px;
+          padding: 0 5px;
+          border: 1px solid #333;
+          border-radius: 0 7px;
+          margin: 0 4px;
+        }
+      }
+    }
+    .base {
+      padding: 12px 0;
+      border: 1px solid #333;
+      border-top: none;
+      text-align: center;
+      .title {
+        color: #666;
+        font-size: 12px;
+        font-weight: bolder;
+        margin-bottom: 4px;
+      }
+      .baseAffix {
+        font-size: 14px;
+        color: #fff;
+        ::v-deep p {
+          display: inline-block !important;
+        }
+      }
+    }
+    .detail {
+      padding: 12.5px 20px 17.5px 15px;
+      border: 1px solid #333;
+      border-top: none;
+    }
+    .desc {
+      padding: 15px 17px 20px;
+      border: 1px solid #333;
+      border-top: none;
+      border-radius: 0 0 0 20px;
+      font-size: 12px;
+      color: #DBB97C;
+      white-space: normal;
+    }
+  }
+}
+</style>
