@@ -4,23 +4,25 @@
       <div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
     </div>
     <div class="detail-box">
-      <div class="info">
-        <div class="name">{{ info.Name }}</div>
-        <div class="des">
-          <div class="needLevel">{{ locale.needLevel }} {{ info.NeedLevel }}</div>
-          <div class="type">{{ info.WeaponType }}</div>
-        </div>
-      </div>
-      <div class="base">
-        <div class="title">{{ locale.baseAffix }}</div>
-        <ul class="baseAffix" v-if="info.BaseAffix">
-          <li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc"></li>
-        </ul>
-      </div>
-      <div class="detail">
-        <equip-affix-list v-if="info.DetailAffix" :info="info.DetailAffix"></equip-affix-list>
-      </div>
-      <div class="desc" v-html="info.Desc">{{getLocale}}</div>
+			<div class="inner">
+				<div class="info">
+					<div class="name">{{ info.Name }}</div>
+					<div class="des">
+						<div class="needLevel">{{ locale.needLevel }} {{ info.NeedLevel }}</div>
+						<div class="type">{{ info.WeaponType }}</div>
+					</div>
+				</div>
+				<div class="base" v-if="info.BaseAffix && Object.keys(info.BaseAffix).length !== 0">
+					<div class="title">{{ locale.baseAffix }}</div>
+					<ul class="baseAffix">
+						<li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc || affix"></li>
+					</ul>
+				</div>
+				<div v-if="info.DetailAffix" class="detail">
+					<equip-affix-list :info="info.DetailAffix"></equip-affix-list>
+				</div>
+				<div v-if="info.Desc" class="desc" v-html="info.Desc">{{getLocale}}</div>
+			</div>
     </div>
   </div>
 </template>
@@ -71,16 +73,23 @@ export default {
     }
   }
   .detail-box {
-    // position: absolute;
     margin-top: 38px;
     width: 100%;
     background-color: #1a1a1a;
     padding: 11px;
     border-radius: 0 25px;
+		.inner {
+      border: 1px solid #333;
+      border-radius: 0 20px;
+			>div {
+      	border-bottom: 1px solid #333;
+				&:last-child {
+					border: none;
+				}
+			}
+		}
     .info {
       padding: 33px 0 12px;
-      border: 1px solid #333;
-      border-radius: 0 20px 0 0;
       .name {
         color: #FFC130;
         font-size: 19px;
@@ -106,7 +115,6 @@ export default {
     }
     .base {
       padding: 12px 0;
-      border: 1px solid #333;
       border-top: none;
       text-align: center;
       .title {
@@ -125,14 +133,11 @@ export default {
     }
     .detail {
       padding: 12.5px 20px 17.5px 15px;
-      border: 1px solid #333;
       border-top: none;
     }
     .desc {
       padding: 15px 17px 20px;
-      border: 1px solid #333;
       border-top: none;
-      border-radius: 0 0 0 20px;
       font-size: 12px;
       color: #DBB97C;
       white-space: normal;

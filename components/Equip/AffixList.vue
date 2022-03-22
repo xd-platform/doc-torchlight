@@ -2,7 +2,7 @@
   <ul class="detailAffix" ref="affix">
     <li v-for="(affix,i) in info" :key="i">
       <div v-if="affix.level" class="level"><i :name="affix.level"></i></div>
-      <div class="des" v-html="affix.desc"></div>
+      <div class="des" v-html="affix.desc || affix"></div>
     </li>
   </ul>
 </template>
@@ -19,11 +19,11 @@ export default {
   },
   data() {
     return {
-      api_explanation: '/wiki_equip_tips'
+      api_explanation: 'http://172.26.151.94:15000/wiki_equip_tips'
     }
   },
   computed: {
-      ...mapState(["lang"])
+      ...mapState(["lang","API"])
   },
   mounted() {
     // 监听v-html渲染的e标签的点击事件, 请求相关解释
@@ -37,7 +37,7 @@ export default {
           if(id || id == 0) {
             // 对于更新频率不高的数据，做session缓存处理
             if(!sessionStorage.getItem(id)) {
-              this.$axios.get(this.api_explanation, {
+              this.$axios.get(this.API['inventory']['tips'], {
                 params: {
                   Language: this.lang,
                   Id: e.target.id

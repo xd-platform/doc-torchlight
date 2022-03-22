@@ -22,23 +22,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      navList: [
-        { id: 'character', name: 'Character' },
-        { id: 'inventory', name: 'Inventory' },
-        { id: 'skill', name: 'Skill' },
-        { id: 'prefix', name: 'Pre-fix' },
-        { id: 'talent', name: 'Talent' },
-      ],
       subNav: ''
     }
   },
   computed: {
-    ...mapState(['lang'])
+    ...mapState(['lang', 'LOCALES']),
+    ...mapGetters(["getLocale"]),
+    navList() {
+      return [
+				{ id: 'character', name: this.getLocale("nav.character") },
+				{ id: 'inventory', name: this.getLocale("nav.inventory") },
+				{ id: 'skill', name: this.getLocale("nav.skill") },
+				{ id: 'prefix', name: this.getLocale("nav.prefix") },
+				{ id: 'talent', name: this.getLocale("nav.talent") },
+			]
+    },
   },
   beforeMount() {
     this.subNav = $nuxt.$route.name.split('-')[0]

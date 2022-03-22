@@ -5,16 +5,24 @@
         <DetailName
           type="inventory"
           :title="locale.equipName"
-          :info="DetailName"
+          :info="NameInfo"
         ></DetailName>
         <EquipDesc
           :title="locale.equipDesc"
-          :info="DetailDesc"
+          :info="DescInfo"
         ></EquipDesc>
       </div>
       <div class="grid">
-        <LayoutCell :title="locale.dropLocation"> </LayoutCell>
-        <LayoutCell :title="locale.relatedAffixes"> </LayoutCell>
+				<DetailLocation
+					v-if="LocationInfo && LocationInfo.length !== 0"
+          :title="locale.dropLocation"
+          :info="LocationInfo"
+				></DetailLocation>
+				<DetailAffix
+					v-if="AffixInfo && Object.keys(AffixInfo).length !== 0"
+          :title="locale.relatedAffixes"
+          :info="AffixInfo"
+				></DetailAffix>
       </div>
     </div>
   </LayoutWrapper>
@@ -27,32 +35,31 @@ export default {
   data() {
     return {
       id: "",
-      api_detail: "/wiki_equip_detail",
-      detailInfo: {},
-
-      DetailName: {
+      NameInfo: {
         Icon: "",
         Name: "",
         Level: "",
         Type: "",
       },
-      DetailDesc: {
+      DescInfo: {
         BaseAffix: '',
         DetailAffix: '',
         Desc: ''
-      }
+      },
+			LocationInfo: [],
+			AffixInfo: {}
     };
   },
   computed: {
-    ...mapState(["lang", "device"]),
+    ...mapState(["lang", "device", "API"]),
     ...mapGetters(["getLocale"]),
     locale() {
       return {
-        needLevel: this.getLocale("needLevel"),
-        equipName: this.getLocale("equipName"),
-        equipDesc: this.getLocale("equipDesc"),
-        dropLocation: this.getLocale("dropLocation"),
-        relatedAffixes: this.getLocale("relatedAffixes"),
+        needLevel: this.getLocale("inventory.needLevel"),
+        equipName: this.getLocale("inventory.equipName"),
+        equipDesc: this.getLocale("inventory.equipDesc"),
+        dropLocation: this.getLocale("inventory.dropLocation"),
+        relatedAffixes: this.getLocale("inventory.relatedAffixes"),
       };
     },
   },
@@ -63,7 +70,7 @@ export default {
   methods: {
     getDetail(id) {
       this.$axios
-        .get(this.api_detail, {
+        .get(this.API['inventory']['detail'], {
           params: {
             Language: this.lang,
             Uid: id,
@@ -71,22 +78,25 @@ export default {
         })
         .then((res) => {
           if (res.status == 200 && res.data) {
-            this.detailInfo = res.data;
             const info = res.data;
 
             // 为了便于组件使用，统一传入参数
-            this.DetailName = {
-              Icon: info.Icon,
-              Name: info.Name,
-              Level: this.locale.needLevel + " " + info.NeedLevel,
-              Type: info.WeaponType,
+            this.NameInfo = {
+              Icon: info.Icon || '',
+              Name: info.Name || '',
+              Level: this.locale.needLevel + " " + info.NeedLevel || '',
+              Type: info.WeaponType || '',
             };
 
-            this.DetailDesc = {
-              BaseAffix: info.BaseAffix,
-              DetailAffix: info.DetailAffix,
-              Desc: info.Desc,
+            this.DescInfo = {
+              BaseAffix: info.BaseAffix || {},
+              DetailAffix: info.DetailAffix || {},
+              Desc: info.Desc || '',
             };
+
+						this.LocationInfo = info.DropPlace || []
+
+						this.AffixInfo = info.RandomAffixPool || {}
           }
         });
     },

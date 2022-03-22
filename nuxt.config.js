@@ -43,22 +43,6 @@ export default {
     '@nuxtjs/proxy'
   ],
 
-  axios: {
-    proxy: true,
-    prefix: '/api',
-    // baseURL: process.env.API
-  },
-
-  proxy: {
-    '/api': {
-      changeOrigin: true,
-      target: 'http://172.26.151.94:15000',
-      pathRewrite: {
-          "^/api": "/",
-      },
-    }
-  },
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [

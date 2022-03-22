@@ -57,21 +57,20 @@ a {
 .spine-player-controls {
   display: none !important;
 }
-/*
+
 ::-webkit-scrollbar{
-  width: get_vh(6px);
+  width: 4px;
   background-color: transparent;
 }
 
 ::-webkit-scrollbar-track{
   -webkit-box-shadow: none;
-  border-radius: get_vh(10px);
+  border-radius: 10px;
   background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb{
-  border-radius: get_vh(10px);
+  border-radius: 10px;
   -webkit-box-shadow: none;
-  background-color: rgba(51, 51, 51, 0.3);
+  background-color: rgba(51, 51, 51, 0.5);
 }
-*/

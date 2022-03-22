@@ -21,11 +21,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/css/imgs.bg.scss';
+
 #App {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url('@/assets/imgs/bg.jpg');
+  background-image: url($bg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

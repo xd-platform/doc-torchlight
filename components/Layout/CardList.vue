@@ -18,10 +18,14 @@ export default {
   width: 100%;
   display: grid;
   justify-content: space-between;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
   &.type-thumbnail {
     grid-template-columns: repeat(8, 132px);
     grid-row-gap: 20px;
+  }
+  &.type-large {
+    grid-template-columns: repeat(2, 594px);
+    grid-row-gap: 12px;
   }
 }
 </style>
