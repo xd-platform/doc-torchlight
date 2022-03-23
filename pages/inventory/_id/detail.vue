@@ -1,6 +1,6 @@
 <template>
-  <LayoutWrapper class="detail-content">
-    <div :class="`in-${device}`">
+  <LayoutWrapper class="inventory-detail">
+    <div class="inner" :class="`in-${device}`">
       <div class="grid">
         <DetailName
           type="inventory"
@@ -19,7 +19,7 @@
           :info="LocationInfo"
 				></DetailLocation>
 				<DetailAffix
-					v-if="AffixInfo && Object.keys(AffixInfo).length !== 0"
+					v-if="AffixInfo && AffixInfo.length !== 0"
           :title="locale.relatedAffixes"
           :info="AffixInfo"
 				></DetailAffix>
@@ -89,14 +89,14 @@ export default {
             };
 
             this.DescInfo = {
-              BaseAffix: info.BaseAffix || {},
-              DetailAffix: info.DetailAffix || {},
+              BaseAffix: info.BaseAffix || [],
+              DetailAffix: info.DetailAffix || [],
               Desc: info.Desc || '',
             };
 
 						this.LocationInfo = info.DropPlace || []
 
-						this.AffixInfo = info.RandomAffixPool || {}
+						this.AffixInfo = info.RandomAffixPool || []
           }
         });
     },
@@ -105,8 +105,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.detail-content {
+.inventory-detail {
   color: #fff;
+  >.inner {
+    padding-bottom: 60px;
+  }
   .in-PC {
     display: flex;
     justify-content: space-between;

@@ -1,14 +1,14 @@
 <template>
   <LayoutCell :title="title">
     <div class="desc-content" ref="detail">
-      <div class="base">
+      <div v-if="info.BaseAffix && info.BaseAffix.length != 0" class="base">
         <div class="title">{{ locale.baseAffix }}</div>
-        <ul class="baseAffix" v-if="info.BaseAffix">
+        <ul class="baseAffix">
           <li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc"></li>
         </ul>
       </div>
-      <div class="detail">
-        <equip-affix-list v-if="info.DetailAffix" :info="info.DetailAffix"></equip-affix-list>
+      <div v-if="info.DetailAffix && info.DetailAffix.length != 0" class="detail">
+        <equip-affix-list :info="info.DetailAffix"></equip-affix-list>
       </div>
       <div class="desc" v-html="info.Desc"></div>
     </div>
@@ -34,7 +34,7 @@ export default {
     ...mapGetters(['getLocale']),
     locale() {
       return {
-        baseAffix: this.getLocale('baseAffix')
+        baseAffix: this.getLocale('inventory.baseAffix')
       }
     }
   }

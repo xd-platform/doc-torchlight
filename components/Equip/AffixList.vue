@@ -13,8 +13,8 @@ import { mapState } from 'vuex'
 export default {
   props: {
     info: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     }
   },
   data() {

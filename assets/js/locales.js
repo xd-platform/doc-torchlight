@@ -4,7 +4,7 @@ const LOCALES = {
 			character: 'Character',
 			inventory: 'Inventory',
 			skill: 'Skill',
-			prefix: 'Pre-fix',
+			affix: 'Affix',
 			talent: 'Talent',
 		},
 		inventory: {
@@ -21,7 +21,7 @@ const LOCALES = {
 			character: '英雄',
 			inventory: '装备',
 			skill: '技能',
-			prefix: '词缀',
+			affix: '词缀',
 			talent: '天赋',
 		},
 		inventory: {

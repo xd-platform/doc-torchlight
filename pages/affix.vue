@@ -8,27 +8,11 @@
       v-model="id_level1"
     ></MenuBar>
     <MenuBar level="2" :menu="menuLevel2" v-model="idLevel2"></MenuBar>
-    <MenuBar level="3" :menu="meuuLevel3" v-model="idLevel3"></MenuBar>
-    <!-- <MenuBar level="4" :menu="list_level4" v-model="id_level4"></MenuBar> -->
+    <MenuBar level="3" :menu="menuLevel3" v-model="id_level3"></MenuBar>
 
     <!-- 主体内容 -->
-    <LayoutCardList type="thumbnail" class="content">
-      <Poptip
-        trigger="hover"
-        placement="right-start"
-        padding="0px 0px"
-        content="content"
-        v-for="(card, i) in cardList"
-        :key="i"
-      >
-        <CardThumbnail :type="subNav" :info="card">
-          <nuxt-link
-            :to="`/${subNav}/${card.Id}/detail?lang=${lang}`"
-            target="_blank"
-          ></nuxt-link>
-        </CardThumbnail>
-        <EquipModal :info="card" slot="content"></EquipModal>
-      </Poptip>
+    <LayoutCardList type="large" class="content">
+      {{ cardList }}
     </LayoutCardList>
   </LayoutWrapper>
 </template>
@@ -44,13 +28,13 @@ export default {
   layout: "default",
   data() {
     return {
-      subNav: "inventory",
+      subNav: "affix",
       menuLevel1: [],
       id_level1: "",
       menuLevel2: [],
       idLevel2: "",
-      meuuLevel3: [],
-      idLevel3: "",
+      menuLevel3: [],
+      id_level3: "",
       cardList: [],
     };
   },
@@ -71,17 +55,17 @@ export default {
     idLevel2(newID) {
       const subObj = this.menuLevel2.find((item) => item.id == newID);
       if (subObj && subObj.subMenu && subObj.subMenu.length !== 0) {
-        this.meuuLevel3 = subObj.subMenu;
-        this.idLevel3 =
-          this.meuuLevel3 &&
-          this.meuuLevel3.length != 0 &&
-          this.meuuLevel3[0].id;
+        this.menuLevel3 = subObj.subMenu;
+        this.id_level3 =
+          this.menuLevel3 &&
+          this.menuLevel3.length != 0 &&
+          this.menuLevel3[0].id;
       } else {
-        this.meuuLevel3 = [];
-        this.idLevel3 = "";
+        this.menuLevel3 = [];
+        this.id_level3 = "";
       }
     },
-    idLevel3(newID) {
+    id_level3(newID) {
       if (newID) {
         this.getList(newID);
       } else {
@@ -98,7 +82,7 @@ export default {
   methods: {
     getMenu() {
       this.$axios
-        .get(this.API['inventory']['menu'], {
+        .get(this.API['affix']['menu'], {
           params: {
             Language: this.lang,
           },
@@ -118,7 +102,7 @@ export default {
     },
     getList(id) {
       this.$axios
-        .get(this.API['inventory']['list'], {
+        .get(this.API['affix']['list'], {
           params: {
             Language: this.lang,
             ContentList: id,

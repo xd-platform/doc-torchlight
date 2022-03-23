@@ -12,7 +12,7 @@
 						<div class="type">{{ info.WeaponType }}</div>
 					</div>
 				</div>
-				<div class="base" v-if="info.BaseAffix && Object.keys(info.BaseAffix).length !== 0">
+				<div class="base" v-if="info.BaseAffix && info.BaseAffix.length !== 0">
 					<div class="title">{{ locale.baseAffix }}</div>
 					<ul class="baseAffix">
 						<li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc || affix"></li>
@@ -42,8 +42,8 @@ export default {
     ...mapGetters(['getLocale']),
     locale() {
       return {
-        needLevel: this.getLocale('needLevel'),
-        baseAffix: this.getLocale('baseAffix')
+        needLevel: this.getLocale('inventory.needLevel'),
+        baseAffix: this.getLocale('inventory.baseAffix')
       }
     }
   },

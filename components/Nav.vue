@@ -38,7 +38,7 @@ export default {
 				{ id: 'character', name: this.getLocale("nav.character") },
 				{ id: 'inventory', name: this.getLocale("nav.inventory") },
 				{ id: 'skill', name: this.getLocale("nav.skill") },
-				{ id: 'prefix', name: this.getLocale("nav.prefix") },
+				{ id: 'affix', name: this.getLocale("nav.affix") },
 				{ id: 'talent', name: this.getLocale("nav.talent") },
 			]
     },
@@ -89,6 +89,7 @@ export default {
             align-items: center;
             padding: 0 20px;
             color: #999;
+            font-weight: bolder;
           }
           &.active {
             a {

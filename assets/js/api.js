@@ -7,7 +7,14 @@ const API = {
 		detail: `${apiPre}/wiki_equip_detail`,
 		tips: `${apiPre}/wiki_equip_tips`
 	},
-	talent: `${apiPre}/wiki_talent_list`,
+	talent: {
+		menu: `${apiPre}/wiki_talent_menu`,
+		list: `${apiPre}/wiki_talent_list`
+	},
+	affix: {
+		menu: `${apiPre}/wiki_affix_menu`,
+		list: `${apiPre}/wiki_affix_list`
+	}
 }
 
 export default API;
