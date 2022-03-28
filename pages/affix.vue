@@ -11,14 +11,29 @@
     <MenuBar level="3" :menu="menuLevel3" v-model="id_level3"></MenuBar>
 
     <!-- 主体内容 -->
-    <LayoutCardList type="large" class="content">
-      {{ cardList }}
+    <LayoutCardList v-if="Object.keys(cardFilter).length != 0" type="large" class="content">
+      <AffixItem
+        :title="getLocale('affix.prefix')"
+        :info="cardFilter['prefix']"
+        @view="viewAffixDetail"
+      ></AffixItem>
+      <AffixItem
+        :title="getLocale('affix.suffix')"
+        :info="cardFilter['suffix']"
+        @view="viewAffixDetail"
+      ></AffixItem>
     </LayoutCardList>
+
+    <AffixModal
+      v-if="showModal"
+      :info="modalInfo"
+      @close="closeAffixDetail"
+    ></AffixModal>
   </LayoutWrapper>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 /**
   en_WW 是英文版本
   zh_CN 是中文版
@@ -35,7 +50,10 @@ export default {
       idLevel2: "",
       menuLevel3: [],
       id_level3: "",
-      cardList: [],
+      cardFilter: {},
+
+      showModal: false,
+      modalInfo: []
     };
   },
   watch: {
@@ -69,12 +87,13 @@ export default {
       if (newID) {
         this.getList(newID);
       } else {
-        this.cardList = [];
+        this.cardFilter = {};
       }
     },
   },
   computed: {
-    ...mapState(["lang", 'API']),
+    ...mapState(['lang', 'API']),
+    ...mapGetters(["getLocale"]),
   },
   beforeMount() {
     this.getMenu();
@@ -109,11 +128,32 @@ export default {
           },
         })
         .then((res) => {
-          if (res.status == 200 && res.data) {
-            this.cardList = res.data;
+          if (res.status == 200 && res.data && res.data.length != 0) {
+            this.cardFilter = {
+              prefix: [],
+              suffix: []
+            }
+
+            res.data.forEach(item => {
+              if(item.ModifierType == 3) {
+                this.cardFilter.prefix.push(item)
+              }else if(item.ModifierType == 4) {
+                this.cardFilter.suffix.push(item)
+              }
+            });
+
+            console.log(this.cardFilter)
           }
         });
     },
+    viewAffixDetail(v) {
+      this.modalInfo = v
+      this.showModal = true
+    },
+    closeAffixDetail() {
+      this.showModal = false
+      this.modalInfo = []
+    }
   },
 };
 </script>
@@ -122,6 +162,13 @@ export default {
 .inventory {
   > .content {
     margin-top: 25px;
+    .in-PC {
+      display: flex;
+      justify-content: space-between;
+      .grid {
+        width: 594px;
+      }
+    }
   }
 }
 </style>

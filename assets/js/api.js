@@ -1,4 +1,4 @@
-const apiPre = 'http://172.26.151.94:15000'
+const apiPre = 'https://wiki.torchlight.xd.com'
 
 const API = {
 	inventory: {

@@ -104,7 +104,7 @@ export default {
     background-color: #222;
     color: #666;
     font-size: 14px;
-    margin-right: -1px;
+    margin: 0 5px 5px 0;
     align-items: center;
     border: 1px solid #444;
     &.active {

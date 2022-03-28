@@ -14,6 +14,10 @@ const LOCALES = {
 			equipDesc: 'EquipDesc',
 			dropLocation: 'DropLocation',
 			relatedAffixes: 'RelatedAffixes'
+		},
+		affix: {
+			prefix: 'Prefix',
+			suffix: 'Suffix'
 		}
   },
   zh_CN: {
@@ -31,6 +35,10 @@ const LOCALES = {
 			equipDesc: '装备描述',
 			dropLocation: '掉落地点',
 			relatedAffixes: '相关词缀'
+		},
+		affix: {
+			prefix: '前缀',
+			suffix: '后缀'
 		}
   }
 }
