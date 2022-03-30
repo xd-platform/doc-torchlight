@@ -20,6 +20,8 @@ export default {
     ]
   },
 
+  watchQuery: true,
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/css/base.css',
@@ -40,8 +42,15 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    '@nuxtjs/style-resources'
   ],
+
+  styleResources: {
+    scss: [
+      './assets/scss/mixin.scss',
+    ]
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -53,7 +62,7 @@ export default {
   },
 
   server: {
-    port: 3000, // default: 3000
+    port: 3001, // default: 3000
     host: '0.0.0.0' // default: localhost
   }
 }

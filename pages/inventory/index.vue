@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 /**
   en_WW 是英文版本
   zh_CN 是中文版
@@ -53,6 +53,9 @@ export default {
       idLevel3: "",
       cardList: [],
     };
+  },
+  computed: {
+    ...mapState(["lang"]),
   },
   watch: {
     id_level1(newID) {
@@ -83,53 +86,44 @@ export default {
     },
     idLevel3(newID) {
       if (newID) {
-        this.getList(newID);
+        this.reqList(newID);
       } else {
         this.cardList = [];
       }
     },
-  },
-  computed: {
-    ...mapState(["lang", 'API']),
+    lang() {
+      // 监听到语言变化，重新请求接口
+      this.emptyData()
+      this.initMenu()
+    }
   },
   beforeMount() {
-    this.getMenu();
+    this.initMenu();
   },
   methods: {
-    getMenu() {
-      this.$axios
-        .get(this.API['inventory']['menu'], {
-          params: {
-            Language: this.lang,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200 && res.data && res.data.subMenu) {
-            this.menuLevel1 = res.data.subMenu;
-            this.id_level1 =
-              this.menuLevel1 &&
-              this.menuLevel1.length != 0 &&
-              this.menuLevel1[0].id;
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    ...mapActions(['getMenu', 'getList']),
+    async initMenu() {
+      const menu = await this.getMenu('inventory');
+      if(menu && menu.length != 0) {
+        this.menuLevel1 = menu;
+        this.id_level1 = menu && menu.length != 0 && menu[0].id;
+      }
     },
-    getList(id) {
-      this.$axios
-        .get(this.API['inventory']['list'], {
-          params: {
-            Language: this.lang,
-            ContentList: id,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200 && res.data) {
-            this.cardList = res.data;
-          }
-        });
+    async reqList(id) {
+      const list = await this.getList({ nav: 'inventory', id: id });
+      if(list && list.length != 0) {
+        this.cardList = list;
+      }
     },
+    emptyData() {
+      this.menuLevel1 = []
+      this.id_level1 = ""
+      this.menuLevel2 = []
+      this.idLevel2 = ""
+      this.meuuLevel3 = []
+      this.idLevel3 = ""
+      this.cardList = []
+    }
   },
 };
 </script>

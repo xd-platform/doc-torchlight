@@ -47,7 +47,7 @@ export default {
         Desc: ''
       },
 			LocationInfo: [],
-			AffixInfo: {}
+			AffixInfo: []
     };
   },
   computed: {

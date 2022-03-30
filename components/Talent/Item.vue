@@ -172,9 +172,10 @@ export default {
 			>.name {
 				font-size: 14px;
 				color: #999;
-				width: 100%;
+				width: 68px;
+				line-height: 15px;
 				text-align: center;
-				margin-top: 4px;
+				margin-top: 8px;
 			}
 
 			&:hover {

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 /**
   en_WW 是英文版本
   zh_CN 是中文版
@@ -85,72 +85,66 @@ export default {
     },
     id_level3(newID) {
       if (newID) {
-        this.getList(newID);
+        this.reqList(newID);
       } else {
         this.cardFilter = {};
       }
     },
+    lang() {
+      // 监听到语言变化，重新请求接口
+      this.emptyData()
+      this.initMenu()
+    }
   },
   computed: {
     ...mapState(['lang', 'API']),
     ...mapGetters(["getLocale"]),
   },
   beforeMount() {
-    this.getMenu();
+    this.initMenu();
   },
   methods: {
-    getMenu() {
-      this.$axios
-        .get(this.API['affix']['menu'], {
-          params: {
-            Language: this.lang,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200 && res.data && res.data.subMenu) {
-            this.menuLevel1 = res.data.subMenu;
-            this.id_level1 =
-              this.menuLevel1 &&
-              this.menuLevel1.length != 0 &&
-              this.menuLevel1[0].id;
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+    ...mapActions(['getMenu', 'getList']),
+    async initMenu() {
+      const menu = await this.getMenu('affix');
+      if(menu && menu.length != 0) {
+        this.menuLevel1 = menu;
+        this.id_level1 = menu && menu.length != 0 && menu[0].id;
+      }
     },
-    getList(id) {
-      this.$axios
-        .get(this.API['affix']['list'], {
-          params: {
-            Language: this.lang,
-            ContentList: id,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200 && res.data && res.data.length != 0) {
-            this.cardFilter = {
-              prefix: [],
-              suffix: []
-            }
+    async reqList(id) {
+      const list = await this.getList({ nav: 'affix', id: id });
+      if(list && list.length != 0) {
+        this.cardFilter = {
+          prefix: [],
+          suffix: []
+        }
 
-            res.data.forEach(item => {
-              if(item.ModifierType == 3) {
-                this.cardFilter.prefix.push(item)
-              }else if(item.ModifierType == 4) {
-                this.cardFilter.suffix.push(item)
-              }
-            });
-
-            console.log(this.cardFilter)
+        list.forEach(item => {
+          if(item.ModifierType == 3) {
+            this.cardFilter.prefix.push(item)
+          }else if(item.ModifierType == 4) {
+            this.cardFilter.suffix.push(item)
           }
         });
+      }
     },
     viewAffixDetail(v) {
       this.modalInfo = v
       this.showModal = true
     },
     closeAffixDetail() {
+      this.showModal = false
+      this.modalInfo = []
+    },
+    emptyData() {
+      this.menuLevel1 = []
+      this.id_level1 = ""
+      this.menuLevel2 = []
+      this.idLevel2 = ""
+      this.menuLevel3 = []
+      this.id_level3 = ""
+      this.cardFilter = {}
       this.showModal = false
       this.modalInfo = []
     }

@@ -36,10 +36,12 @@ export default {
     background-color: #292929;
   }
   >li {
-    position: relative;
-    padding: 13px 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 20px 6px 20px;
     cursor: pointer;
     .main-affix {
+      flex: 1;
       white-space: inherit;
       color: #ddd;
       ::v-deep p {
@@ -47,20 +49,24 @@ export default {
       }
     }
     .extend {
-      position: absolute;
-      top: 15px;
-      right: 30px;
+      max-width: 170px;
       display: flex;
       justify-content: flex-end;
+      margin-left: 30px;
+      flex-wrap: wrap;
       li {
         height: 17px;
         line-height: 18px;
         padding: 0 6px;
         border-radius: 5px;
-        margin-left: 7px;
+        margin: 0 0 7px 7px;
         font-size: 12px;
         color: #000;
         background-color: #FEB833;
+        white-space: nowrap;
+        // &:last-child {
+        //   margin: 0;
+        // }
       }
     }
   }

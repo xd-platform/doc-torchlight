@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
@@ -36,63 +36,36 @@ export default {
         this.cardList = [];
       }
     },
+    lang() {
+      // 监听到语言变化，重新请求接口
+      this.emptyData()
+      this.initMenu()
+    }
   },
   beforeMount() {
-    this.getMenu();
+    this.initMenu();
   },
   methods: {
-    getMenu() {
-      this.$axios
-        .get(this.API['talent']['menu'], {
-          params: {
-            Language: this.lang,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200) {
-            this.menu_talent = res.data;
-            this.id_talent =
-              this.menu_talent &&
-              this.menu_talent.length != 0 &&
-              this.menu_talent[0].Id;
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    getCardList(id) {
-      // 防止频繁请求，做session缓存处理
-      if(!sessionStorage.getItem(`talent-${id}`)) {
-        this.$axios
-          .get(this.API["talent"]['list'], {
-            params: {
-              Language: this.lang,
-              ContentList: id,
-            },
-          })
-          .then((res) => {
-            if (res.status == 200) {
-              this.menuList = res.data
-
-              // 验证是否缓存
-              if(
-                this.menuList &&
-                this.menuList.length != 0 &&
-                this.menuList.SubDetailList &&
-                this.menuList.SubDetailList.length != 0
-              ) {
-                sessionStorage.setItem(`talent-${id}`, JSON.stringify(this.menuList))
-              }
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }else {
-        this.menuList = JSON.parse(sessionStorage.getItem(`talent-${id}`))
+    ...mapActions(['getMenu', 'getList']),
+    async initMenu() {
+      const menu = await this.getMenu('talent');
+      console.log(menu)
+      if(menu && menu.length != 0) {
+        this.menu_talent = menu;
+        this.id_talent = menu && menu.length != 0 && menu[0].Id;
       }
     },
+    async getCardList(id) {
+      const list = await this.getList({ nav: 'talent', id: id });
+      if(list && list.length != 0) {
+        this.menuList = list;
+      }
+    },
+    emptyData() {
+      this.menu_talent = []
+      this.id_talent = ''
+      this.menuList = []
+    }
   },
 };
 </script>

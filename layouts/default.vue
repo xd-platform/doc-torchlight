@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/imgs.bg.scss';
+@import '@/assets/scss/imgs.bg.scss';
 
 #App {
   position: relative;

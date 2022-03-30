@@ -27,9 +27,15 @@ export default {
       default: () => []
     }
   },
+  data() {
+    return {
+      info_: []
+    }
+  },
   computed: {
     infoFilter() {
-      return this.$props.info.sort(function(a, b){return a['Tier'] - b['Tier']}); 
+      this.info_ = Object.assign([], this.$props.info);
+      return this.info_.sort(function(a, b){return a['Tier'] - b['Tier']}); 
     }
   }
 }
@@ -73,7 +79,7 @@ export default {
           border-bottom: none;
         }
         >div {
-          padding: 15px 10px;
+          padding: 15px 10px 8px 10px;
         }
         .tier {
           width: 44px;
@@ -88,19 +94,24 @@ export default {
           }
         }
         .extend-box {
-          flex: 1;
+          width: 178px;
           .extend {
             display: flex;
             justify-content: flex-start;
+            flex-wrap: wrap;
             li {
               height: 18px;
               line-height: 18px;
               padding: 0 6px;
               border-radius: 5px;
-              margin-left: 7px;
+              margin: 0 0 7px 7px;
               font-size: 12px;
               color: #000;
               background-color: #FEB833;
+              white-space: nowrap;
+              // &:last-child {
+              //   margin: 0;
+              // }
             }
           }
         }

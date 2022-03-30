@@ -1,0 +1,13 @@
+$prePath: '@/assets/imgs/';
+
+@mixin imgBg($path, $path_2x) {
+  background-image: url($prePath+$path);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  @if $path_2x {
+    @media (-webkit-min-device-pixel-ratio: 2) {
+      background-image: url($prePath+$path_2x);
+    }
+  }
+}

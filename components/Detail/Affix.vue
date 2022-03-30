@@ -14,8 +14,8 @@ export default {
       default: () => ''
     },
     info: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
     }
   }
 }

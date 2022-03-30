@@ -3,18 +3,33 @@
     <div class="wrapper">
       <div class="nav-box">
         <div class="logo">Torchlight: Infinite | wiki</div>
-        <ul class="nav-list">
+        <ul class="nav-list" >
           <li 
             v-for="item in navList" 
             :key="item.id"
             :class="{ active: item.id == subNav }"
-            @click="handler(item.id)"
           >
             <nuxt-link :to="`/${item.id}?lang=${lang}`">{{ item.name }}</nuxt-link>
           </li>
         </ul>
       </div>
       <div class="tools">
+        <Poptip
+          trigger="hover"
+          placement="bottom"
+          content="content"
+          v-model="visible"
+        >
+          <div class="icon"></div>
+          <ul class="language" slot="content">
+            <li
+              v-for="(item, i) in language"
+              :key="i"
+              :class="{ active: lang == item.id }"
+              @click="switchLang(item.id)"
+            >{{ item.name }}</li>
+          </ul>
+        </Poptip>
         <div class="home"></div>
       </div>
     </div>
@@ -22,12 +37,17 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   data() {
     return {
-      subNav: ''
+      subNav: '',
+      language: [
+        { name: '简体中文', id: 'zh_CN' },
+        { name: 'English', id: 'en_WW' },
+      ],
+      visible: false
     }
   },
   computed: {
@@ -37,19 +57,38 @@ export default {
       return [
 				{ id: 'character', name: this.getLocale("nav.character") },
 				{ id: 'inventory', name: this.getLocale("nav.inventory") },
-				{ id: 'skill', name: this.getLocale("nav.skill") },
+				// { id: 'skill', name: this.getLocale("nav.skill") },
 				{ id: 'affix', name: this.getLocale("nav.affix") },
 				{ id: 'talent', name: this.getLocale("nav.talent") },
 			]
     },
   },
-  beforeMount() {
-    this.subNav = $nuxt.$route.name.split('-')[0]
+  watch: {
+    '$nuxt.$route.name': {
+      handler($name) {
+        if($name) {
+          this.subNav = $name.split('-')[0];
+        }
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
-    handler(id) {
-      this.subNav = id
-    }
+    ...mapMutations(['SETLANG', 'EMPTYSTATE']),
+    switchLang(id) {
+      this.visible = false
+      this.updateRouteQuery('lang', id);
+      this.SETLANG(id)
+      this.EMPTYSTATE()
+    },
+    updateRouteQuery(key, value) {
+      let { query } = $nuxt.$route;
+      if (query[key] == value) return;
+      this.$router.replace({
+          query: { ...query, [key]: value },
+      });
+    },
   }
 }
 </script>
@@ -105,19 +144,46 @@ export default {
       display: flex;
       align-items: center;
       height: 100%;
+      .icon {
+        width: 35px;
+        height: 35px;
+        @include imgBg('local.png', 'local_2x.png');
+        cursor: pointer;
+      }
       .home {
         width: 35px;
         height: 35px;
-        background-image: url('@/assets/imgs/home.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
+        @include imgBg('home.png', 'home_2x.png');
         cursor: pointer;
-        @media (-webkit-min-device-pixel-ratio: 2) {
-          background-image: url('@/assets/imgs/home_2x.png');
+        margin-left: 15px;
+      }
+
+      .language {
+        width: 160px;
+        background-color: #111;
+        padding: 10px 0;
+        li {
+          padding: 10px 0;
+          text-align: center;
+          cursor: pointer;
+          transition: all ease-in-out 200ms;
+          &:hover {
+            background-color: #222;
+          }
+
+          &.active {
+            color: #fff;
+          }
         }
       }
     }
   }
+}
+
+::v-deep .ivu-poptip {
+  display: inherit;
+}
+::v-deep .ivu-poptip-popper {
+  margin-top: 5px;
 }
 </style>
