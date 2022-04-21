@@ -2,7 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #050B1C;
-  font-family: Arial, "Microsoft YaHei";
   overscroll-behavior: none;
   overflow: hidden;
 }

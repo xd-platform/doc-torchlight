@@ -11,11 +11,14 @@
 import { mapMutations } from 'vuex'
 export default {
   beforeMount() {
+		const devicePixelRatio = window.devicePixelRatio;
+		this.SETDEVICEPIXELRATIO(devicePixelRatio);
+
     const lang = $nuxt.$route.query.lang || 'en_WW';
     this.SETLANG(lang);
   },
   methods: {
-    ...mapMutations(['SETLANG']),
+    ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO']),
   }
 }
 </script>

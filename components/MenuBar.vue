@@ -6,7 +6,7 @@
       :id="item.id"
       :class="{ active: item.id == id }"
       @click="$emit('handler', item.id)"
-    >{{ item.content ? item.content : (item.id ? `ID: ${item.id}` : 'ID: none') }}</li>
+    >{{ item.content }}</li>
   </ul>
 </template>
 
@@ -51,6 +51,8 @@ export default {
   border-bottom: 1px solid #557BAD;
   margin-bottom: 25px;
   li {
+		min-width: 80px;
+    justify-content: center;
     height: 49px;
     padding: 0 10px;
     background-color: #111;

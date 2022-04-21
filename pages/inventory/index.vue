@@ -23,7 +23,7 @@
       >
         <CardThumbnail :type="subNav" :info="card">
           <nuxt-link
-            :to="`/${subNav}/${card.Id}/detail?lang=${lang}`"
+            :to="`/${subNav}/detail?id=${card.Id}&lang=${lang}`"
             target="_blank"
           ></nuxt-link>
         </CardThumbnail>

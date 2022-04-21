@@ -29,7 +29,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '~plugins/viewUI', ssr: true}
+    {src: '~plugins/viewUI', ssr: true},
+		{src: '~plugins/swiper', client: true}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -62,7 +63,7 @@ export default {
   },
 
   server: {
-    port: 3001, // default: 3000
+    port: 3002, // default: 3000
     host: '0.0.0.0' // default: localhost
   }
 }

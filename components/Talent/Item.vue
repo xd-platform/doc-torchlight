@@ -110,13 +110,7 @@ export default {
 			align-items: center;
 			width: 83px;
 			height: 83px;
-			background-image: url('@/assets/imgs/talent_logo.png');
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			@media (-webkit-min-device-pixel-ratio: 2) {
-				background-image: url('@/assets/imgs/talent_logo_2x.png');
-			}
+			@include imgBg('talentLogo.png', 'talentLogo_2x.png');
 
 			>.icon {
 				width: 50px;

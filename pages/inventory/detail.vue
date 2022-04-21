@@ -63,8 +63,13 @@ export default {
       };
     },
   },
+	watch: {
+		lang() {
+   		this.getDetail(this.id);
+		}
+	},
   beforeMount() {
-    this.id = $nuxt.$route.params["id"];
+    this.id = $nuxt.$route.query.id;
     this.getDetail(this.id);
   },
   methods: {

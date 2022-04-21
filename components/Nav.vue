@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   data() {
@@ -74,13 +74,19 @@ export default {
       deep: true
     }
   },
+	created() {
+		this.initTheme()
+	},
   methods: {
     ...mapMutations(['SETLANG', 'EMPTYSTATE']),
+    ...mapActions(['getTheme']),
     switchLang(id) {
       this.visible = false
       this.updateRouteQuery('lang', id);
       this.SETLANG(id)
       this.EMPTYSTATE()
+
+			this.initTheme()
     },
     updateRouteQuery(key, value) {
       let { query } = $nuxt.$route;
@@ -89,6 +95,9 @@ export default {
           query: { ...query, [key]: value },
       });
     },
+		async initTheme() {
+			await this.getTheme('character')
+		}
   }
 }
 </script>

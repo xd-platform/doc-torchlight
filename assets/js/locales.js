@@ -18,6 +18,11 @@ const LOCALES = {
 		affix: {
 			prefix: 'Prefix',
 			suffix: 'Suffix'
+		},
+		character: {
+			introduction: 'Introduction',
+			characteristic: 'Characteristic',
+			advanced: 'Advanced Features'
 		}
   },
   zh_CN: {
@@ -39,6 +44,11 @@ const LOCALES = {
 		affix: {
 			prefix: '前缀',
 			suffix: '后缀'
+		},
+		character: {
+			introduction: '介绍',
+			characteristic: '特性',
+			advanced: '进阶特性'
 		}
   }
 }

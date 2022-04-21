@@ -11,7 +11,12 @@ export const state = () => ({
   // 缓存用
   inventory: {},
   affix: {},
-  talent: {}
+  talent: {},
+	character: {},
+	// 角色配置json
+	characterConfig: [],
+	// 屏幕倍率
+	devicePixelRatio: 0
 })
 
 export const mutations = {
@@ -26,7 +31,13 @@ export const mutations = {
     state.inventory = {}
     state.affix = {}
     state.talent = {}
-  }
+  },
+	SETDEVICEPIXELRATIO(state, ratio) {
+		state.devicePixelRatio = ratio
+	},
+	SETCHARACTERCONFIG(state, config) {
+		state.characterConfig = config
+	}
 }
 
 export const getters = {
@@ -43,7 +54,25 @@ export const getters = {
     }
   
     return str
-  }
+  },
+	getRetina: ({devicePixelRatio}) => (src, src_retina) => {
+		if(devicePixelRatio) {
+			if(src && src_retina) {
+				return { 'background-image': `url(${devicePixelRatio == 1 ? src : src_retina})` }
+			}else {
+				return { 'background-image': `url(${src})` }
+			}
+		}else {
+			return ''
+		}
+	},
+	getCharacterConfig: ({characterConfig}) => (id) => {
+		if(characterConfig && characterConfig.length != 0) {
+			return characterConfig.find((info) => info.id === id)
+		}else {
+			return {}
+		}
+	}
 }
 
 export const actions = {
@@ -85,7 +114,6 @@ export const actions = {
     return response;
   },
   async getList({state, commit}, payload) {
-    console.log(state[payload.nav])
     let response = []
     if(
       state[payload.nav][payload.id] &&
@@ -114,5 +142,37 @@ export const actions = {
     commit('SETCACHE', o)
 
     return response;
-  }
+  },
+	async getTheme({state, commit}, nav) {
+		let response = []
+		let key = ''
+		if(state.lang == 'en_WW') {
+			key = 'themeEn'
+		}else if(state.lang == 'zh_CN') {
+			key = 'theme'
+		}
+
+		if(state[nav][key] && state[nav][key].length != 0) {
+			commit('SETCHARACTERCONFIG', state[nav][key])
+		}else {
+			response = await this.$axios
+				.get(state.API[nav][key])
+				.then((res) => {
+					if(res.status == 200 && res.data) {
+						try {
+							const jsonData = JSON.parse(JSON.stringify(res.data))
+							commit('SETCHARACTERCONFIG', jsonData)
+							return jsonData
+						} catch(e) {
+							console.log(e)
+							return []
+						}
+					}
+				})
+
+			
+			const o = { nav: nav, cacheId: key, content: response || [] }
+			commit('SETCACHE', o)
+		}
+	}
 }

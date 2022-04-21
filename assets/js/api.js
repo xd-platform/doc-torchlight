@@ -1,6 +1,13 @@
 const apiPre = 'https://wiki.torchlight.xd.com'
+const ossPre = 'https://website.xdcdn.net/homepage/torchlight-wiki'
 
 const API = {
+	character: {
+		list: `${apiPre}/wiki_hero_character_menu`,
+		detail: `${apiPre}/wiki_hero_character_detail`,
+		theme: `${ossPre}/theme.json`,
+		themeEn: `${ossPre}/theme_en.json`
+	},
 	inventory: {
 		menu: `${apiPre}/wiki_equip_menu`,
 		list: `${apiPre}/wiki_equip_list`,
