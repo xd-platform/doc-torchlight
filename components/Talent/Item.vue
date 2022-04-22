@@ -113,8 +113,8 @@ export default {
 			@include imgBg('talentLogo.png', 'talentLogo_2x.png');
 
 			>.icon {
-				width: 50px;
-				height: 50px;
+				width: 60px;
+				height: 60px;
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: contain;
@@ -162,6 +162,10 @@ export default {
 				border: 4px solid #111;
 				border-radius: 50%;
 				transition: all ease-in-out 200ms;
+
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
 			}
 			>.name {
 				font-size: 14px;

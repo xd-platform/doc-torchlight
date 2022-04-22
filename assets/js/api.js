@@ -6,7 +6,9 @@ const API = {
 		list: `${apiPre}/wiki_hero_character_menu`,
 		detail: `${apiPre}/wiki_hero_character_detail`,
 		theme: `${ossPre}/theme.json`,
-		themeEn: `${ossPre}/theme_en.json`
+		themeEn: `${ossPre}/theme_en.json`,
+		theme_dev: `${ossPre}/theme_dev.json`,
+		themeEn_dev: `${ossPre}/theme_en_dev.json`
 	},
 	inventory: {
 		menu: `${apiPre}/wiki_equip_menu`,

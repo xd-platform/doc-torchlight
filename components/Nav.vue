@@ -77,9 +77,6 @@ export default {
       deep: true
     }
   },
-	created() {
-		this.initTheme()
-	},
   methods: {
     ...mapMutations(['SETLANG', 'EMPTYSTATE']),
     ...mapActions(['getTheme']),

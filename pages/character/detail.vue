@@ -8,11 +8,13 @@
 					<CharacterIntroduce :info="intro.introduce" style="margin-top: 40px;"></CharacterIntroduce>
 				</div>
 				<div class="content-detail">
-					<div
-						v-if="intro && intro.theme"
-						class="role"
-						:style="{...getRetina(intro.theme.introBg, intro.theme.introBg_2x), 'transform': `scale(${scale})`}"
-					></div>
+					<div class="role-bg" :style="{ 'transform': `scale(${scale})` }">
+						<div
+							v-if="intro && intro.theme"
+							class="role"
+							:style="getRetina(intro.theme.role, intro.theme.role_2x)"
+						></div>
+					</div>
 				</div>
 			</div>
 			<div v-show="id_level1 === 'characteristic'" class="characteristic-content">
@@ -20,11 +22,12 @@
 					<CharacterIntroduce v-model="sub_CH_name" :info="advanced"></CharacterIntroduce>
 				</div>
 				<div class="content-detail">
-					<div
-						v-if="intro && intro.theme"
-						class="role"
-						:style="{...getRetina(intro.theme.CHBg, intro.theme.CHBg_2x), 'transform': `scale(${scale})`}"
-					>
+					<div class="role-bg" :style="{ 'transform': `scale(${scale})` }">
+						<div
+							v-if="intro && intro.theme"
+							class="role"
+							:style="{ 'background-image': `url(${intro.theme.role})` }"
+						></div>
 						<CharacterFeature
 							v-if="sub_CH && sub_CH.SkillList"
 							class="feature"
@@ -151,17 +154,30 @@ export default {
 	.content-detail {
 		flex: 1;
 		position: relative;
-		.role {
+		.role-bg {
 			position: absolute;
 	    top: -196px;
 	    left: -165px;
 			width: 879px;
 			height: 1080px;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-
+			@include imgBg('introBg.png', 'introBg_2x.png');
 			transform-origin: 10% 4%;
+			.role {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+		}
+	}
+}
+
+.introduction-content {
+	.content-detail {
+		.role-bg {
+			.role {
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 }
@@ -173,6 +189,15 @@ export default {
 			position: absolute;
 			bottom: 40px;
 			left: 205px;
+		}
+		.role-bg {
+			.role {
+				position: absolute;
+				width: 485px;
+				height: 596px;
+		    top: -28px;
+		    right: 135px;
+			}
 		}
 	}
 }

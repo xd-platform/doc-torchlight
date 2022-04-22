@@ -15,6 +15,12 @@ export default {
 		...mapState(['loading'])
 	},
   beforeMount() {
+		if(['torchlight-doc.xd-cf-2022.workers.dev', 'torchlight-doc.xd.com'].indexOf(window.location.host) > 0) {
+			this.SETENV('prod')
+		}else {
+			this.SETENV('dev')
+		}
+
 		const devicePixelRatio = window.devicePixelRatio;
 		this.SETDEVICEPIXELRATIO(devicePixelRatio);
 
@@ -22,7 +28,7 @@ export default {
     this.SETLANG(lang);
   },
   methods: {
-    ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO']),
+    ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO', 'SETENV']),
   }
 }
 </script>

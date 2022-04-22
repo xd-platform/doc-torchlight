@@ -34,17 +34,12 @@ export default {
       swiperOptions: {
         loop: true,
 				autoplay: false,
-        // autoplay: {
-        //   delay: 5000,
-        // },
 				slidesPerView: 3,
-				// spaceBetween : 100,
         mousewheel: true,
         lazy: {
           loadPrevNext: true,
         },
         grabCursor: true, // 触摸滑动
-        // centeredSlides: true,
         pagination: {
           // 分页
           el: '.swiper-pagination',
@@ -110,12 +105,12 @@ export default {
 			cursor: pointer;
 			.name {
 				position: absolute;
-		    bottom: 23px;
+		    bottom: 16px;
 		    left: 35px;
 		    width: 340px;
 				height: 60px;
 				color: #111;
-				font-size: 50px;
+				font-size: 40px;
 		    font-weight: 700;
 		    font-style: italic;
 			}

@@ -57,7 +57,7 @@ export default {
       margin-top: 24px;
 			background-position: center;
 			background-repeat: no-repeat;
-			background-size: contain;
+			background-size: 75% 75%;
       background-color: #111;
       &::before {
         content: '';

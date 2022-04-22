@@ -8,6 +8,7 @@ export const state = () => ({
   LOCALES: LOCALES,
 	API: API,
   device: 'PC',
+	env: '',
 	loading: true,
   // 缓存用
   inventory: {},
@@ -41,6 +42,9 @@ export const mutations = {
 	},
 	SETLOADING(state, bool) {
 		state.loading = bool
+	},
+	SETENV(state, e) {
+		state.env = e
 	}
 }
 
@@ -162,12 +166,17 @@ export const actions = {
 			key = 'theme'
 		}
 
-		if(state[nav][key] && state[nav][key].length != 0) {
-			commit('SETCHARACTERCONFIG', state[nav][key])
+		let envKey = ''
+		if(state.env === 'dev') {
+			envKey = '_dev'
+		}
+
+		if(state[nav][key+envKey] && state[nav][key+envKey].length != 0) {
+			commit('SETCHARACTERCONFIG', state[nav][key+envKey])
 		}else {
 			commit('SETLOADING', true)
 			response = await this.$axios
-				.get(state.API[nav][key])
+				.get(state.API[nav][key+envKey])
 				.then((res) => {
 					if(res.status == 200 && res.data) {
 						try {
@@ -183,7 +192,7 @@ export const actions = {
 			
 			commit('SETLOADING', false)
 
-			const o = { nav: nav, cacheId: key, content: response || [] }
+			const o = { nav: nav, cacheId: key+envKey, content: response || [] }
 			commit('SETCACHE', o)
 		}
 	}

@@ -19,6 +19,7 @@
 			</li>
 		</ul>
 		<div class="desc-box" v-if="skill && Object.keys(skill).length != 0">
+			<div class="bg"></div>
 			<div class="title-box">
 				<div class="title">
 					<div class="icon-box">
@@ -28,7 +29,7 @@
 				</div>
 			</div>
 			<div class="desc">
-				<p v-for="(des, i) in skill.Desc.replaceAll('\\n', '\n').split('\n')" :key="i">{{ des }}</p>
+				<p v-for="(des, i) in skill.DescMax.replaceAll('\\n', '\n').split('\n')" :key="i">{{ des }}</p>
 			</div>
 		</div>
 	</div>
@@ -171,7 +172,16 @@ export default {
 		width: 450px;
 		height: 200px;
 		margin-top: 25px;
+		.bg {
+			position: absolute;
+	    top: -20px;
+	    left: -38px;
+			width: 516px;
+			height: 240px;
+			@include imgBg('introBgMin.png', 'introBgMin_2x.png');
+		}
 		.title-box {
+			position: relative;
 			display: flex;
 			justify-content: center;
 		}
@@ -211,6 +221,7 @@ export default {
 			}
 		}
 		.desc {
+			position: relative;
 			width: 373px;
 			height: 135px;
 	    overflow-x: hidden;
