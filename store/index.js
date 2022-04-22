@@ -8,6 +8,7 @@ export const state = () => ({
   LOCALES: LOCALES,
 	API: API,
   device: 'PC',
+	loading: true,
   // 缓存用
   inventory: {},
   affix: {},
@@ -37,6 +38,9 @@ export const mutations = {
 	},
 	SETCHARACTERCONFIG(state, config) {
 		state.characterConfig = config
+	},
+	SETLOADING(state, bool) {
+		state.loading = bool
 	}
 }
 
@@ -82,6 +86,7 @@ export const actions = {
     if(state[nav]['menu'] && state[nav]['menu'].length != 0) {
       response = state[nav]['menu']
     }else {
+			commit('SETLOADING', true)
       response = await this.$axios
         .get(state.API[nav]['menu'], {
           params: {
@@ -106,6 +111,8 @@ export const actions = {
         .catch((err) => {
           console.error(err);
         });
+			
+			commit('SETLOADING', false)
     }
 
     const o = { nav: nav, cacheId: 'menu', content: response || [] }
@@ -121,6 +128,7 @@ export const actions = {
     ) {
       response = state[payload.nav][payload.id]
     }else {
+			commit('SETLOADING', true)
       response = await this.$axios
         .get(state.API[payload.nav]['list'], {
           params: {
@@ -136,6 +144,8 @@ export const actions = {
         .catch((err) => {
           console.error(err);
         });
+			
+			commit('SETLOADING', false)
     }
 
     const o = { nav: payload.nav, cacheId: payload.id, content: response || [] }
@@ -155,6 +165,7 @@ export const actions = {
 		if(state[nav][key] && state[nav][key].length != 0) {
 			commit('SETCHARACTERCONFIG', state[nav][key])
 		}else {
+			commit('SETLOADING', true)
 			response = await this.$axios
 				.get(state.API[nav][key])
 				.then((res) => {
@@ -169,8 +180,9 @@ export const actions = {
 						}
 					}
 				})
-
 			
+			commit('SETLOADING', false)
+
 			const o = { nav: nav, cacheId: key, content: response || [] }
 			commit('SETCACHE', o)
 		}

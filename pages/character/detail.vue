@@ -126,6 +126,7 @@ export default {
 							this.CH.forEach(item => {
 								const obj = {
 									name: item.Name,
+									icon: item.Icon,
 									desc: item.TotalContent.replaceAll('\\n', '\n').split('\n')
 								}
 								_advanced.list.push(obj)

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -73,7 +73,9 @@ export default {
     this.getDetail(this.id);
   },
   methods: {
+		...mapMutations(['SETLOADING']),
     getDetail(id) {
+			this.SETLOADING(true)
       this.$axios
         .get(this.API['inventory']['detail'], {
           params: {
@@ -103,7 +105,11 @@ export default {
 
 						this.AffixInfo = info.RandomAffixPool || []
           }
-        });
+					// this.SETLOADING(false)
+        })
+				.catch(() => {
+					// this.SETLOADING(false)
+				})
     },
   },
 };

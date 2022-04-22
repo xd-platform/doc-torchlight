@@ -1,5 +1,5 @@
 const apiPre = 'https://wiki.torchlight.xd.com'
-const ossPre = 'https://website.xdcdn.net/homepage/torchlight-wiki'
+const ossPre = 'https://website.xdcdn.net/homepage/torchlight-doc'
 
 const API = {
 	character: {

@@ -11,7 +11,9 @@
 					class="cover"
 					:name="hero.id"
 					:style="getRetina(hero.theme.cover, hero.theme.cover_2x)"
-				></div>
+				>
+					<div class="name">{{ hero.name }}</div>
+				</div>
         <nuxt-link
           :to="`/${subNav}/detail?id=${hero.id}&lang=${lang}`"
           target="_blank"
@@ -74,11 +76,19 @@ export default {
 <style lang="scss" scoped>
 .character {
   position: relative;
+	width: 1536px;
 	.swiper-content {
 		width: 100%;
-		height: 600px;
-		margin: 0 auto;
+		height: 760px;
+		margin: -20px auto 0;
+		padding-top: 20px;
 		.swiper-slide {
+			width: 512px;
+			height: 645px;
+			transition: all ease-in-out 200ms;
+			&:hover {
+				transform: translate3d(0, -20px, 0);
+			}
 			a {
 				position: absolute;
 				top: 0;
@@ -90,25 +100,24 @@ export default {
 		}
 		.cover {
 			position: absolute;
+			width: 100%;
+			height: 100%;
     	bottom: 0;
-			left: 50%;
-			transform: scale(0.8) translate3d(-61%, 0, 0);
+			left: 0;
 		  background-position: center;
 		  background-repeat: no-repeat;
 		  background-size: contain;
 			cursor: pointer;
-
-			&[name='310'] {
-				width: 555px;
-				height: 607px;
-			}
-			&[name='600'] {
-				width: 510px;
-				height: 636px;
-			}
-			&[name='900'] {
-				width: 520px;
-				height: 655px;
+			.name {
+				position: absolute;
+		    bottom: 23px;
+		    left: 35px;
+		    width: 340px;
+				height: 60px;
+				color: #111;
+				font-size: 50px;
+		    font-weight: 700;
+		    font-style: italic;
 			}
 		}
 		.swiper-pagination {

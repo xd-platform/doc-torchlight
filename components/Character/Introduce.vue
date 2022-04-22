@@ -9,7 +9,7 @@
 					:class="{ active: skill.name === name }"
       		@click="$emit('handler', skill.name)"
 				>
-					<div class="icon"></div>
+					<div class="icon" :style="{ 'background-image': `url(${skill.icon})` }"></div>
 					<div class="name">{{ skill.name }}</div>
 				</li>
 			</ul>
@@ -97,6 +97,10 @@ export default {
 					border-radius: 50%;
 					background-color: #3a3a3a;
 					margin: 0 auto;
+					
+					background-position: center;
+					background-repeat: no-repeat;
+					background-size: cover;
 					&::before {
 						content: '';
 						width: 101px;

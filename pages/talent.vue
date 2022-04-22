@@ -56,6 +56,7 @@ export default {
       }
     },
     async getCardList(id) {
+			this.menuList = []
       const list = await this.getList({ nav: 'talent', id: id });
       if(list && list.length != 0) {
         this.menuList = list;

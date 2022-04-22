@@ -110,6 +110,7 @@ export default {
       }
     },
     async reqList(id) {
+			this.cardList = []
       const list = await this.getList({ nav: 'inventory', id: id });
       if(list && list.length != 0) {
         this.cardList = list;

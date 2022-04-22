@@ -4,12 +4,16 @@
     <div class="wrapper">
       <nuxt/>
     </div>
+		<Loading v-show="loading"></Loading>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
+	computed: {
+		...mapState(['loading'])
+	},
   beforeMount() {
 		const devicePixelRatio = window.devicePixelRatio;
 		this.SETDEVICEPIXELRATIO(devicePixelRatio);

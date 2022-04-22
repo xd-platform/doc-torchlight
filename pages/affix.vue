@@ -113,13 +113,13 @@ export default {
       }
     },
     async reqList(id) {
+      this.cardFilter = {
+        prefix: [],
+        suffix: []
+      }
+			
       const list = await this.getList({ nav: 'affix', id: id });
       if(list && list.length != 0) {
-        this.cardFilter = {
-          prefix: [],
-          suffix: []
-        }
-
         list.forEach(item => {
           if(item.ModifierType == 3) {
             this.cardFilter.prefix.push(item)

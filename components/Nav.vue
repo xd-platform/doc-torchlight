@@ -30,7 +30,9 @@
             >{{ item.name }}</li>
           </ul>
         </Poptip>
-        <div class="home"></div>
+        <div class="home">
+					<a href="https://torchlight.xd.com" target="_blank"></a>
+				</div>
       </div>
     </div>
   </div>
@@ -68,6 +70,7 @@ export default {
       handler($name) {
         if($name) {
           this.subNav = $name.split('-')[0];
+					this.initTheme()
         }
       },
       immediate: true,
@@ -96,7 +99,9 @@ export default {
       });
     },
 		async initTheme() {
-			await this.getTheme('character')
+			if(this.subNav == 'character') {
+				await this.getTheme('character')
+			}
 		}
   }
 }
@@ -165,6 +170,11 @@ export default {
         @include imgBg('home.png', 'home_2x.png');
         cursor: pointer;
         margin-left: 15px;
+				a {
+					display: inline-block;
+					width: 100%;
+					height: 100%;
+				}
       }
 
       .language {
