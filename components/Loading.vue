@@ -28,11 +28,13 @@ export default {
 	z-index: 100;
 	.anime {
 		position: absolute;
-		top: 42%;
-		width: 200px;
-		height: 200px;
-		left: 50%;
-		margin-left: -100px;
+		// top: 42%;
+		bottom: 0;
+		width: 160px;
+		height: 160px;
+		right: 5px;
+		// left: 50%;
+		// margin-left: -70px;
 	}
 }
 </style>

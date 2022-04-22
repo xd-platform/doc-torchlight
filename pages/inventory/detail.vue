@@ -105,10 +105,10 @@ export default {
 
 						this.AffixInfo = info.RandomAffixPool || []
           }
-					// this.SETLOADING(false)
+					this.SETLOADING(false)
         })
 				.catch(() => {
-					// this.SETLOADING(false)
+					this.SETLOADING(false)
 				})
     },
   },
