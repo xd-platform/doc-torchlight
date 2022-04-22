@@ -4,6 +4,7 @@
 
 stages:
   - build
+  - deploy
 
 .vue_cache:
   cache: # 缓存
