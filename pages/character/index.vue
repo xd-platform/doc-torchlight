@@ -70,8 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 .character {
-  position: relative;
-	width: 1536px;
+	width: 1536px !important;
 	.swiper-content {
 		width: 100%;
 		height: 760px;
