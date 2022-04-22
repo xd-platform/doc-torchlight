@@ -1,0 +1,42 @@
+# 生产地址：https://torchlight-doc.xd.com/
+# https://torchlight-doc.xd-cf-2022.workers.dev
+# https://torchlight-doc-test.xd-cf-2022.workers.dev 测试地址
+
+stages:
+  - build
+  - deploy
+
+.vue_cache:
+  cache: # 缓存
+    paths:
+      - dist
+      - node_modules
+
+
+build-job:
+  stage: build
+  extends: .vue_cache
+  tags:
+    - ansible-bj
+  only:
+    - master
+    - test
+    # - dev
+  script:
+    - yarn
+    - yarn generate
+    - rm /data/wwwroot/gitlab-runner/xd-website/homepage/torchlight-doc-nuxt2-$CI_COMMIT_BRANCH -rf
+    - cp dist /data/wwwroot/gitlab-runner/xd-website/homepage/torchlight-doc-nuxt2-$CI_COMMIT_BRANCH/ -rf
+
+
+deploy-wrangler-job:
+  stage: deploy
+  tags:
+    - ansible-bj
+  only:
+    - master
+    - test
+    # - dev
+  script:
+    - cd /data/ops/cf-worker/homepage/torchlight-doc-nuxt2
+    - wrangler publish --env $CI_COMMIT_BRANCH
