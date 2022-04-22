@@ -23,6 +23,19 @@ build-job:
     # - dev
   script:
     - yarn
-    - yarn build
+    - yarn generate
     - rm /data/wwwroot/gitlab-runner/xd-website/homepage/torchlight-doc-nuxt2-$CI_COMMIT_BRANCH -rf
     - cp dist /data/wwwroot/gitlab-runner/xd-website/homepage/torchlight-doc-nuxt2-$CI_COMMIT_BRANCH/ -rf
+
+
+deploy-wrangler-job:
+  stage: deploy
+  tags:
+    - ansible-bj
+  only:
+    - master
+    - test
+    # - dev
+  script:
+    - cd /data/ops/cf-worker/homepage/torchlight-doc-nuxt2
+    - wrangler publish --env $CI_COMMIT_BRANCH
