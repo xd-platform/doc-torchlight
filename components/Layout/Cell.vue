@@ -20,8 +20,6 @@ export default {
 
 <style lang="scss" scoped>
 .cell {
-  // width: 555px;
-  // width: 594px;
   width: 100%;
   margin-bottom: 12px;
   >.title {
@@ -37,5 +35,19 @@ export default {
     width: 100%;
     background-color: #222;
   }
+}
+
+@media screen and (max-width: 828px) {
+	.cell {
+		width: vw(750px);
+		margin-bottom: vw(24px);
+		>.title {
+			height: vw(88px);
+			line-height: vw(88px);
+			padding: 0 vw(34px);
+			font-size: vw(28px);
+			font-weight: 500;
+		}
+	}
 }
 </style>

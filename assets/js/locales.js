@@ -23,6 +23,10 @@ const LOCALES = {
 			introduction: 'Introduction',
 			characteristic: 'Characteristic',
 			advanced: 'Advanced Features'
+		},
+		talent: {
+			level1: 'Level1',
+			level2: 'Level2'
 		}
   },
   zh_CN: {
@@ -49,6 +53,10 @@ const LOCALES = {
 			introduction: '介绍',
 			characteristic: '特性',
 			advanced: '进阶特性'
+		},
+		talent: {
+			level1: '一级天赋',
+			level2: '二级天赋'
 		}
   }
 }

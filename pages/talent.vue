@@ -49,7 +49,6 @@ export default {
     ...mapActions(['getMenu', 'getList']),
     async initMenu() {
       const menu = await this.getMenu('talent');
-      console.log(menu)
       if(menu && menu.length != 0) {
         this.menu_talent = menu;
         this.id_talent = menu && menu.length != 0 && menu[0].Id;
@@ -76,5 +75,13 @@ export default {
   .content {
     margin-top: 12px;
   }
+}
+
+@media screen and (max-width: 828px) {
+	.talent {
+	  .content {
+	    margin-top: vw(24px);
+	  }
+	}
 }
 </style>

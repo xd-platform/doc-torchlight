@@ -11,8 +11,16 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 export default {
+	data() {
+		return {
+			tamp: 0,
+			now: 0,
+			scale: 1,
+			// wrapperStyle: { height: 'calc(100vh - 23.6714975845vw)' }
+		}
+	},
 	computed: {
-		...mapState(['loading'])
+		...mapState(['loading', 'clientWidth', 'clientHeight'])
 	},
   beforeMount() {
 		if(['torchlight-doc.xd-cf-2022.workers.dev', 'torchlight-doc.xd.com'].indexOf(window.location.host) > 0) {
@@ -26,9 +34,49 @@ export default {
 
     const lang = $nuxt.$route.query.lang || 'en_WW';
     this.SETLANG(lang);
+
+		window.onresize = this.handleResize
+		this.handleResize()
   },
   methods: {
-    ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO', 'SETENV']),
+    ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO', 'SETENV', 'SETDEVICE', 'SETSCALE', 'SETCLIENTSIZE']),
+		handleResize() {
+			this.now = new Date().getTime()
+			if(this.now - this.tamp > 100) {
+
+				const _height = document.documentElement.clientHeight
+				const _width = document.documentElement.clientWidth
+				if(_width > 828) {
+					this.SETDEVICE('pc')
+
+					if(_height !== this.clientHeight) {
+						if(_height > 1080) {
+							this.scale = _height / 1080
+						}else {
+							this.scale = 1
+						}
+
+						this.SETSCALE(this.scale)
+					}
+				}else {
+					console.log(_height)
+					// this.wrapperStyle = { height: `calc(${_height} - 23.6714975845vw)` }
+					// console.log(this.wrapperStyle)
+					this.SETDEVICE('app')
+
+					this.scale = 1
+					this.SETSCALE(this.scale)
+				}
+
+				this.tamp = this.now
+
+				this.SETCLIENTSIZE({
+					width: _width,
+					height: _height
+				})
+				// console.log(this.clientWidth, this.clientHeight)
+			}
+		},
   }
 }
 </script>
@@ -56,10 +104,21 @@ export default {
   }
   >.wrapper {
     width: 100%;
-    height: calc(100vh - 60px);
-    margin-top: 60px;
+    height: calc(100vh - 76px);
+    margin-top: 74px;
     overflow-x: hidden;
     overflow-y: scroll;
   }
+}
+
+@media screen and (max-width: 828px) {
+	@import '@/assets/scss/imgs.bgMobile.scss';
+	#App {
+  	background-image: url($bgMobile);
+		>.wrapper {
+			margin-top: vw(196px);
+    	height: calc(100vh - vw(196px));
+		}
+	}
 }
 </style>

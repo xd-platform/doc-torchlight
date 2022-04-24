@@ -1,6 +1,7 @@
-$prePath: '@/assets/imgs/';
+// $prePath: '@/assets/imgs/';
+$prePath: 'https://website.xdcdn.net/homepage/torchlight-doc/imgs/';
 
-@mixin imgBg($path, $path_2x) {
+@mixin imgBg($path, $path_2x: false) {
   background-image: url($prePath+$path);
   background-position: center;
   background-repeat: no-repeat;
@@ -11,3 +12,15 @@ $prePath: '@/assets/imgs/';
     }
   }
 }
+
+@mixin hideScrollBar() {
+	&::-webkit-scrollbar {
+		display: none; /* Chrome Safari */
+	}
+	scrollbar-width: none; /* firefox */
+	-ms-overflow-style: none; /* IE 10+ */
+}
+
+@function vw($px) {
+	@return calc($px/828px) * 100vw
+};

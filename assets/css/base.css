@@ -53,6 +53,33 @@ a {
   float: right;
 }
 
+/* 
+Any    RareVal = 0   //未知
+NORMAL RareVal = 1   //白
+MAGIC  RareVal = 2   //蓝
+RARE   RareVal = 3   //紫
+PINK   RareVal = 4   //粉
+UNIQUE RareVal = 100 //金 */
+
+.rare-0 {
+	background-color: #111  !important;
+}
+.rare-1 {
+	background: linear-gradient(135.2deg, #DBDBDB 0%, #F4F4F4 99.92%)  !important;
+}
+.rare-2 {
+	background: linear-gradient(135.2deg, #63519B 0%, #9A7CE3 99.92%)  !important;
+}
+.rare-3 {
+	background: linear-gradient(135.2deg, #2D222D 0%, #932B91 99.92%)  !important;
+}
+.rare-4 {
+	background: linear-gradient(135.2deg, #9F73AB 0%, #C07ABE 97.32%, #C17ABF 99.92%)  !important;
+}
+.rare-100 {
+	background: linear-gradient(135.2deg, #8F5E36 0%, #DD8C51 99.92%) !important;
+}
+
 .spine-player-controls {
   display: none !important;
 }
@@ -71,5 +98,6 @@ a {
 ::-webkit-scrollbar-thumb{
   border-radius: 10px;
   -webkit-box-shadow: none;
-  background-color: rgba(51, 51, 51, 0.5);
+  /* background-color: rgba(51, 51, 51, 0.5); */
+  background-color: rgba(255, 193, 48, 1);
 }

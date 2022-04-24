@@ -7,7 +7,7 @@ export const state = () => ({
   lang: '',
   LOCALES: LOCALES,
 	API: API,
-  device: 'PC',
+  device: '',
 	env: '',
 	loading: true,
   // 缓存用
@@ -18,7 +18,10 @@ export const state = () => ({
 	// 角色配置json
 	characterConfig: [],
 	// 屏幕倍率
-	devicePixelRatio: 0
+	devicePixelRatio: 0,
+	scale: 1,
+	clientWidth: 0,
+	clientHeight: 0
 })
 
 export const mutations = {
@@ -45,6 +48,16 @@ export const mutations = {
 	},
 	SETENV(state, e) {
 		state.env = e
+	},
+	SETDEVICE(state, d) {
+		state.device = d
+	},
+	SETSCALE(state, scale) {
+		state.scale = scale
+	},
+	SETCLIENTSIZE(state, size) {
+		state.clientWidth = size.width
+		state.clientHeight = size.height
 	}
 }
 
@@ -85,7 +98,6 @@ export const getters = {
 
 export const actions = {
   async getMenu({state, commit}, nav) {
-    console.log(state[nav])
     let response = []
     if(state[nav]['menu'] && state[nav]['menu'].length != 0) {
       response = state[nav]['menu']
@@ -195,5 +207,33 @@ export const actions = {
 			const o = { nav: nav, cacheId: key+envKey, content: response || [] }
 			commit('SETCACHE', o)
 		}
+	},
+	async getTip({state, commit}, id) {
+		let response = ''
+
+		if(state['affix'][`tip_${id}`] && state['affix'][`tip_${id}`].length != 0) {
+			response = state['affix'][`tip_${id}`]
+		}else {
+			response = this.$axios
+				.get(state.API['inventory']['tips'], {
+					params: {
+						Language: state.lang,
+						Id: id
+					}
+				})
+				.then((res) => {
+					if(res.status == 200) {
+						return res.data
+					}
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+		}
+
+		const o = { nav: 'affix', cacheId: 'tip_'+id, content: response || '' }
+    commit('SETCACHE', o)
+
+    return response;
 	}
 }

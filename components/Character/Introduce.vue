@@ -153,4 +153,56 @@ export default {
 		}
 	}
 }
+
+@media screen and (max-width: 828px) {
+	.introduce-box {
+		width: 100%;
+		li {
+			margin-bottom: vw(38px);
+			.title {
+				min-width: vw(150px);
+				height: vw(56px);
+				line-height: vw(54px);
+				padding: 0 vw(20px);
+				margin-bottom: vw(30px);
+				font-size: vw(32px);
+			}
+			.desc {
+				font-size: vw(24px);
+				p {
+					margin-bottom: vw(10px);
+				}
+			}
+
+			.skill {
+				margin-top: vw(50px);
+				li {
+					width: vw(160px);
+					margin-right: vw(115px);
+					.icon {
+						width: vw(120px);
+						height: vw(120px);
+						&::before {
+							content: '';
+							width: vw(160px);
+							height: vw(160px);
+							top: vw(-20px);
+							left: vw(-20px);
+						}
+						&::after {
+							width: vw(163px);
+							height: vw(170px);
+							top: vw(-30px);
+					    left: vw(-20px);
+						}
+					}
+					.name {
+						font-size: vw(28px);
+						margin-top: vw(50px);
+					}
+				}
+			}
+		}
+	}
+}
 </style>

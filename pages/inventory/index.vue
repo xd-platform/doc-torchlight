@@ -18,6 +18,7 @@
         placement="right-start"
         padding="0px 0px"
         content="content"
+				:disabled="device === 'pc' ? false : true"
         v-for="(card, i) in cardList"
         :key="i"
       >
@@ -55,7 +56,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["lang"]),
+    ...mapState(["lang", "device"]),
   },
   watch: {
     id_level1(newID) {

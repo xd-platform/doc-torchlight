@@ -1,7 +1,7 @@
 <template>
   <LayoutCell :title="title">
     <div class="name-content" :class="type">
-      <div class="icon-box">
+      <div :class="`icon-box rare-${info.RateVal}`">
         <div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
       </div>
       <div class="info">
@@ -48,7 +48,7 @@ export default {
     width: 75px;
     height: 75px;
     border-radius: 0 8px;
-    background: linear-gradient(135.2deg, #8F5E36 0%, #DD8C51 99.92%);
+    background: #111;
     .icon {
       background-position: center;
       background-repeat: no-repeat;
@@ -87,5 +87,40 @@ export default {
       }
     }
   }
+}
+
+@media screen and (max-width: 828px) {
+	.name-content {
+		padding: vw(40px) vw(44px);
+		.icon-box {
+	    width: vw(150px);
+	    height: vw(150px);
+	    border-radius: 0 vw(15px);
+		}
+		.info {
+			height: vw(150px);
+			margin-left: vw(57px);
+			.name {
+      	font-size: vw(38px);
+				margin-bottom: vw(4px);
+			}
+			.des {
+				font-size: vw(24px);
+				.level,
+				.type {
+					span {
+	          height: vw(42px);
+	          line-height: vw(40px);
+	          padding: 0 vw(11px);
+	          border: vw(2px) solid #333;
+	          border-radius: 0 vw(10px);
+					}
+				}
+	      .level {
+	        margin-bottom: vw(8px);
+	      }
+			}
+		}
+	}
 }
 </style>

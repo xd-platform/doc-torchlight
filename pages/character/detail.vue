@@ -1,11 +1,12 @@
 <template>
   <LayoutWrapper class="character-detail">
+		<CharacterName v-if="intro" class="in-moile" :info="intro"></CharacterName>
 		<MenuBar level="1" :menu="menuLevel1" v-model="id_level1"></MenuBar>
 		<client-only>
 			<div v-show="id_level1 === 'introduction'" class="introduction-content">
-				<div v-if="intro && intro.introduce" class="content-des">
-					<CharacterName :info="intro"></CharacterName>
-					<CharacterIntroduce :info="intro.introduce" style="margin-top: 40px;"></CharacterIntroduce>
+				<div class="content-des">
+					<CharacterName v-if="intro" class="in-pc" :info="intro"></CharacterName>
+					<CharacterIntroduce v-if="intro && intro.introduce" :info="intro.introduce"></CharacterIntroduce>
 				</div>
 				<div class="content-detail">
 					<div class="role-bg" :style="{ 'transform': `scale(${scale})` }">
@@ -50,14 +51,12 @@ export default {
 			id_level1: 'introduction',
 			CH: [],
 			advanced: [],
-			sub_CH_name: '',
-			clientHeight: 0,
-			scale: 1
+			sub_CH_name: ''
 		}
 	},
 	computed: {
     ...mapGetters(["getLocale", "getCharacterConfig", "getRetina", "getLocale"]),
-		...mapState(["lang", "API"]),
+		...mapState(["lang", "API", "scale"]),
 		menuLevel1() {
 			return [
 				{ id: 'introduction', content: this.getLocale('character.introduction') },
@@ -86,25 +85,11 @@ export default {
 	},
   beforeMount() {
 		this.init()
-		
-		window.onresize = this.handleResize
-		this.handleResize()
   },
   methods: {
 		init() {
     	this.id = $nuxt.$route.query.id;
     	this.getDetail(this.id);
-		},
-		handleResize() {
-			const clientHeight = document.documentElement.clientHeight
-			if(clientHeight !== this.clientHeight) {
-				this.clientHeight = clientHeight
-				if(this.clientHeight > 1080) {
-					this.scale = this.clientHeight / 1080
-				}else {
-					this.scale = 1
-				}
-			}
 		},
     getDetail(id) {
       this.$axios
@@ -144,6 +129,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.in-pc {
+	display: block;
+}
+.in-moile {
+	display: none;
+}
+.introduction-content {
+	.introduce-box {
+		margin-top: 40px;
+	}
+}
+
 .introduction-content,
 .characteristic-content {
 	display: flex;
@@ -197,6 +194,64 @@ export default {
 				height: 596px;
 		    top: -28px;
 		    right: 135px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 828px) {
+	.in-pc {
+		display: none;
+	}
+	.in-moile {
+		display: block;
+	}
+
+	.character-detail {
+		padding-top: 0 !important;
+		.menu-level1 {
+			height: vw(88px);
+			background-color: #111;
+			padding-top: vw(10px);
+		}
+	}
+
+	.introduction-content,
+	.characteristic-content {
+		.introduce-box {
+			margin-top: vw(45px);
+		}
+		.content-des {
+			width: vw(708px);
+			margin: 0 auto;
+		}
+	}
+
+	.introduction-content {
+		.content-detail {
+			display: none;
+		}
+	}
+	.characteristic-content {
+		flex-direction: column;
+		.content-detail {
+			width: 100%;
+			height: vw(960px);
+			flex: auto;
+			.feature {
+				bottom: 0;
+				left: 0;
+			}
+			.role-bg {
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				@include imgBg('introBgMobile.png');
+				background-size: cover;
+				.role {
+					display: none;
+				}
 			}
 		}
 	}

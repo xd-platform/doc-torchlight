@@ -92,4 +92,47 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 828px) {
+	.talent-menu {
+  	width: vw(750px);
+		height: vw(227px);
+		margin: 0 auto;
+  	justify-content: center;
+		li {
+			position: relative;
+			width: vw(100px);
+			margin: 0 vw(8px);
+			.icon {
+				width: vw(100px);
+				height: vw(100px);
+      	border: vw(4px) solid #2B2A2A;
+				margin-top: vw(30px);
+	      &::before {
+	        bottom: vw(-30px);
+	        margin-left: vw(-8px);
+	        border-width: vw(14px) vw(8px);
+	      }
+			}
+			.name {
+				position: absolute;
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+				width: vw(150px);
+				text-align: center;
+				font-size: vw(28px);
+				line-height: vw(28px);
+				margin-top: vw(28px);
+				opacity: 0;
+			}
+
+			&.active {
+				.name {
+					opacity: 1;
+					transition: all ease-in-out 200ms;
+				}
+			}
+		}
+	}
+}
 </style>

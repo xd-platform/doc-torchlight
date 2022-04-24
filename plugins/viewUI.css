@@ -11,4 +11,5 @@ body {
 }
 .ivu-poptip-popper {
   margin: 60px 0 20px;
+	z-index: 1;
 }

@@ -28,4 +28,20 @@ export default {
     grid-row-gap: 12px;
   }
 }
+
+@media screen and (max-width: 828px) {
+	.card-list {
+		width: vw(750px);
+		margin: 0 auto;
+  	padding-bottom: vw(100px);
+	  &.type-thumbnail {
+	    grid-template-columns: repeat(4, vw(168px));
+	    grid-row-gap: vw(25px);
+	  }
+	  &.type-large {
+	    grid-template-columns: repeat(1, 750px);
+	    grid-row-gap: 0;
+	  }
+	}
+}
 </style>

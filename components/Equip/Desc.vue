@@ -10,7 +10,7 @@
       <div v-if="info.DetailAffix && info.DetailAffix.length != 0" class="detail">
         <equip-affix-list :info="info.DetailAffix"></equip-affix-list>
       </div>
-      <div class="desc" v-html="info.Desc"></div>
+      <div class="desc" v-if="info.Desc" v-html="info.Desc.replaceAll('\\n', '\n')"></div>
     </div>
   </LayoutCell>
 </template>
@@ -70,8 +70,30 @@ export default {
     font-size: 12px;
     color: #DBB97C;
     background-color: #222;
-    white-space: normal;
+    white-space: break-spaces;
   }
+}
+
+@media screen and (max-width: 828px) {
+	.desc-content {
+		.base {
+			padding: vw(38px) vw(44px);
+			.title {
+      	font-size: vw(24px);
+      	margin-bottom: vw(14px);
+			}
+			.baseAffix {
+				font-size: vw(28px);
+			}
+		}
+	  .detail {
+	    padding: vw(34px) vw(44px);
+	  }
+		.desc {
+	    padding: vw(30px) vw(44px);
+	    font-size: vw(24px);
+		}
+	}
 }
 </style>
 

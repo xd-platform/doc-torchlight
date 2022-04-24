@@ -26,4 +26,12 @@ export default {
   padding: 21px 44px;
 	color: #DDD;
 }
+
+@media screen and (max-width: 828px) {
+	.location-content {
+  	padding: vw(34px) vw(44px);
+		font-size: vw(24px);
+		line-height: vw(36px);
+	}
+}
 </style>

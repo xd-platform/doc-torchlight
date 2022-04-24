@@ -25,4 +25,10 @@ export default {
 .affix-content {
   padding: 21px 44px;
 }
+
+@media screen and (max-width: 828px) {
+	.affix-content {
+	  padding: vw(34px) vw(44px);
+	}
+}
 </style>

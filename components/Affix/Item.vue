@@ -39,6 +39,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 13px 20px 6px 20px;
+    font-size: 12px;
     cursor: pointer;
     .main-affix {
       flex: 1;
@@ -60,18 +61,34 @@ export default {
         padding: 0 6px;
         border-radius: 5px;
         margin: 0 0 7px 7px;
-        font-size: 12px;
         color: #000;
         background-color: #FEB833;
         white-space: nowrap;
-        // &:last-child {
-        //   margin: 0;
-        // }
       }
     }
   }
 }
 .empty {
   padding: 20px;
+}
+
+@media screen and (max-width: 828px) {
+	.inner {
+		>li {
+			padding: vw(28px) vw(40px) vw(14px) vw(28px);
+    	font-size: vw(24px);
+			.extend {
+				max-width: vw(250px);
+				margin-left: vw(50px);
+				li {
+					height: vw(38px);
+					line-height: vw(38px);
+					padding: 0 vw(15px);
+					border-radius: vw(10px);
+					margin: 0 0 vw(16px) vw(16px);
+				}
+			}
+		}
+	}
 }
 </style>

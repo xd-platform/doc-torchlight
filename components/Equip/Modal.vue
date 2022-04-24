@@ -1,6 +1,6 @@
 <template>
   <div class="inventory-detail">
-    <div class="icon-box">
+    <div :class="`icon-box rare-${info.RateVal}`">
       <div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
     </div>
     <div class="detail-box">
@@ -62,7 +62,7 @@ export default {
     top: -38px;
     left: 50%;
     margin-left: -38px;
-    background: linear-gradient(135.2deg, #8F5E36 0%, #DD8C51 99.92%);
+    background: #111;
     border: 5px solid #0B0B0B;
     .icon {
       background-position: center;

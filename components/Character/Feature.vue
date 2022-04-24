@@ -192,8 +192,6 @@ export default {
 			.icon-box {
 				width: 50px;
 				height: 50px;
-				// width: 74px;
-				// height: 74px;
 				transform: skewX(-15deg);
 				background-color: #FFC62C;
 				overflow: hidden;
@@ -234,6 +232,90 @@ export default {
 			line-height: 18px;
 			p {
 				margin-bottom: 5px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 828px) {
+	.characteristic-box {
+		width: 100%;
+		height: vw(870px);
+		.list {
+			>li {
+				margin: 0 vw(20px);
+				.level-box {
+					width: vw(100px);
+					margin: 0 auto vw(15px);
+					&::after {
+						width: vw(100px);
+						height: vw(24px);
+						transform: skewX(0deg) skewY(-8deg);
+					}
+					.level {
+						font-size: vw(36px);
+					}
+				}
+				ol {
+					width: vw(120px);
+					>li {
+						width: vw(120px);
+						height: vw(120px);
+						transform: skewX(0deg) skewY(-8deg);
+						margin-bottom: vw(18px);
+						margin-left: 0 !important;
+						.icon {
+							width: vw(120px);
+							height: vw(140px);
+							background-color: #3a3a3a;
+							transform: skewX(0deg) skewY(8deg);
+							margin-left: 0;
+							margin-top: vw(-10px);
+						}
+
+						&.active {
+							box-shadow: 0px 0px vw(6px) vw(6px) #ace3ff
+						}
+					}
+				}
+			}
+		}
+		.desc-box {
+			width: vw(760px);
+			height: vw(410px);
+			bottom: vw(75px);
+			left: 50%;
+			margin-left: vw(-380px);
+			background-color: #FFDD4B;
+			margin-top: 0;
+			.bg {
+				display: none;
+			}
+			.title {
+				margin: vw(30px) 0 vw(25px);
+				.icon-box {
+					width: vw(90px);
+					height: vw(90px);
+					transform: skewX(0deg) skewY(-8deg);
+					.icon {
+						width: vw(90px);
+						height: vw(110px);
+						margin-left: 0;
+						margin-top: vw(-15px);
+						transform: skewX(0deg) skewY(8deg);
+					}
+				}
+			}
+			.desc {
+				width: vw(673px);
+				height: vw(240px);
+				margin: 0 auto;
+				font-size: vw(24px);
+				padding-right: vw(8px);
+				line-height: vw(26px);
+				p {
+					margin-bottom: vw(10px);
+				}
 			}
 		}
 	}

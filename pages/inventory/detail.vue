@@ -1,6 +1,6 @@
 <template>
   <LayoutWrapper class="inventory-detail">
-    <div class="inner" :class="`in-${device}`">
+    <div class="inner">
       <div class="grid">
         <DetailName
           type="inventory"
@@ -91,6 +91,7 @@ export default {
             this.NameInfo = {
               Icon: info.Icon || '',
               Name: info.Name || '',
+							RateVal: info.RateVal || '0',
               Level: this.locale.needLevel + " " + info.NeedLevel || '',
               Type: info.WeaponType || '',
             };
@@ -120,13 +121,24 @@ export default {
   color: #fff;
   >.inner {
     padding-bottom: 60px;
+	  display: flex;
+	  justify-content: space-between;
+	  .grid {
+	    width: 594px;
+	  }
   }
-  .in-PC {
-    display: flex;
-    justify-content: space-between;
-    .grid {
-      width: 594px;
-    }
-  }
+}
+
+@media screen and (max-width: 828px) {
+	.inventory-detail {
+		>.inner {
+    	padding-bottom: vw(100px);
+			flex-direction: column;
+			.grid {
+				width: vw(750px);
+				margin: 0 auto;
+			}
+		}
+	}
 }
 </style>

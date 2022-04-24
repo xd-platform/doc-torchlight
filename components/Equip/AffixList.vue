@@ -1,14 +1,22 @@
 <template>
-  <ul class="detailAffix" ref="affix">
-    <li v-for="(affix,i) in info" :key="i">
-      <div v-if="affix.level" class="level"><i :name="affix.level"></i></div>
-      <div class="des" v-html="affix.desc || affix"></div>
-    </li>
-  </ul>
+	<div>
+	  <ul class="detailAffix" ref="affix">
+	    <li v-for="(affix,i) in info" :key="i">
+	      <div v-if="affix.level" class="level"><i :name="affix.level"></i></div>
+	      <div class="des" v-html="affix.desc || affix"></div>
+	    </li>
+	  </ul>
+		<Modal
+	    v-model="explainModal"
+	    :title="explanTitle"
+			class-name="vertical-center-modal"
+			:footer-hide="footerHide"
+		>{{ explan }}</Modal>
+	</div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -17,11 +25,14 @@ export default {
       default: () => []
     }
   },
-  data() {
-    return {
-      api_explanation: 'http://172.26.151.94:15000/wiki_equip_tips'
-    }
-  },
+	data() {
+		return {
+			footerHide: true,
+			explainModal: false,
+			explanTitle: '',
+			explan: ''
+		}
+	},
   computed: {
       ...mapState(["lang","API"])
   },
@@ -29,42 +40,22 @@ export default {
     // 监听v-html渲染的e标签的点击事件, 请求相关解释
     this.listenExplanation()
   },
-  methods: {
+	methods: {
+		...mapActions(['getTip']),
     listenExplanation() {
-      this.$refs.affix.addEventListener('click', (e) => {
+      this.$refs.affix.addEventListener('click', async (e) => {
         if(e.target.nodeName === 'E') {
           const id = e.target.id;
           if(id || id == 0) {
-            // 对于更新频率不高的数据，做session缓存处理
-            if(!sessionStorage.getItem(id)) {
-              this.$axios.get(this.API['inventory']['tips'], {
-                params: {
-                  Language: this.lang,
-                  Id: e.target.id
-                }
-              }).then((res) => {
-                if(res.status == 200) {
-                  this.$Message.info({
-                    content: res.data,
-                    duration: 3
-                  });
-
-                  if(res.data && res.data != null && res.data != 'undefined') {
-                    sessionStorage.setItem(id, res.data)
-                  }
-                }
-              })
-            }else {
-              this.$Message.info({
-                content: sessionStorage.getItem(id),
-                duration: 3
-              });
-            }
+						const explan = await this.getTip(id)
+						this.explanTitle = e.target.innerText
+						this.explan = explan.replaceAll('\\n', '\n').split('\n').join('')
+						this.explainModal = true
           }
         }
       })
     }
-  }
+	}
 }
 </script>
 
@@ -114,5 +105,91 @@ export default {
       }
     }
   }
+}
+
+::v-deep .vertical-center-modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	.ivu-modal{
+		top: 0;
+	}
+}
+::v-deep .ivu-modal-mask {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+::v-deep .ivu-modal-content {
+	background-color: #111;
+	border-radius: 0 30px;
+	color: #fff;
+	padding: 0 12px;
+}
+::v-deep .ivu-modal-header {
+	border-bottom: 1px solid #333;
+}
+::v-deep .ivu-modal-header-inner {
+	color: #FFC130;
+	font-weight: 700;
+}
+::v-deep .ivu-modal-body {
+	padding: 30px 16px;
+}
+
+@media screen and (max-width: 828px) {
+	.detailAffix {
+  	font-size: vw(24px);
+		li {
+			.level {
+      	margin-right: vw(13px);
+				i {
+	        width: vw(15px);
+	        height: vw(15px);
+	        border-radius: vw(4px) 0;
+				}
+			}
+			.des {
+	      ::v-deep e {
+	        font-size: vw(26px);
+	        margin: 0 vw(6px);
+	        border-bottom: vw(2px) solid #50aad4;
+	        line-height: vw(32px);
+	      }
+			}
+		}
+	}
+
+	::v-deep .ivu-modal {
+		width: vw(588px) !important;
+	}
+
+	::v-deep .ivu-modal-content {
+		border-radius: 0 vw(50px);
+		padding: 0 vw(27px);
+	}
+	::v-deep .ivu-modal-header {
+		border-bottom: vw(2px) solid #333;
+		padding: 0 vw(16px);
+	}
+	::v-deep .ivu-modal-header-inner {
+		color: #FFC130;
+		font-size: vw(36px);
+		height: vw(100px);
+		line-height: vw(105px);
+	}
+	::v-deep .ivu-modal-body {
+		padding: vw(32px) vw(16px) vw(58px);
+		font-size: vw(24px);
+	}
+	::v-deep .ivu-modal-close {
+		top: auto;
+		bottom: vw(-120px);
+		right: 50%;
+		transform: translate3d(50%, 0, 0);
+		.ivu-icon-ios-close {
+			font-size: vw(100px);
+			color: #fff;
+			font-weight: 800;
+		}
+	}
 }
 </style>

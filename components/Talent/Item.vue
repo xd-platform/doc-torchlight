@@ -12,7 +12,7 @@
 				</div>
 			</div>
 			<!-- 天赋点 -->
-			<div class="talent-item">
+			<div class="talent-item" ref="affix">
 				<div class="info">
 					<div class="logo">
 						<div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
@@ -23,49 +23,63 @@
 					</div>
 				</div>
 				<ul v-if="info.SubDetailList && info.SubDetailList.length != 0" class="talent-child" name="1">
-					<Poptip
-						trigger="hover"
-						placement="right-start"
-						padding="0px 0px"
-						content="content"
-						v-for="(item ,i) in info.SubDetailList.slice(0, 3)"
-						:key="i"
-					>
-						<li>
-							<div class="icon" :style="{ 'background-image': `url(${item.Icon})` }"></div>
-							<div class="name">{{ item.Name }}</div>
-						</li>
-						<div class="tip" slot="content">
-							<div class="title">{{ item.Name }}</div>
-							<div class="des">{{ item.Content }}</div>
-						</div>
-					</Poptip>
+					<div class="title">{{ level1 }}</div>
+					<div class="poptip-icon">
+						<Poptip
+	          	:trigger="device === 'pc' ? 'hover' : 'click'"
+							:placement="device === 'pc' ? 'right-start' : 'top'"
+							padding="0px 0px"
+							content="content"
+							v-for="(item ,i) in info.SubDetailList.slice(0, 3)"
+							:key="i"
+						>
+							<div class="icon-box">
+								<div class="icon" :style="{ 'background-image': `url(${item.Icon})` }"></div>
+								<div class="name">{{ item.Name }}</div>
+							</div>
+							<div class="tip" slot="content">
+								<div class="title">{{ item.Name }}</div>
+								<div class="des" v-html="item.Content"></div>
+							</div>
+						</Poptip>
+					</div>
 				</ul>
 				<ul v-if="info.SubDetailList && info.SubDetailList.length != 0" class="talent-child" name="2">
-					<Poptip
-						trigger="hover"
-						placement="right-start"
-						padding="0px 0px"
-						content="content"
-						v-for="(item ,i) in info.SubDetailList.slice(3, 6)"
-						:key="i"
-					>
-						<li>
-							<div class="icon" :style="{ 'background-image': `url(${item.Icon})` }"></div>
-							<div class="name">{{ item.Name }}</div>
-						</li>
-						<div class="tip" slot="content">
-							<div class="title">{{ item.Name }}</div>
-							<div class="des">{{ item.Content }}</div>
-						</div>
-					</Poptip>
+					<div class="title">{{ level2 }}</div>
+					<div class="poptip-icon">
+						<Poptip
+	          	:trigger="device === 'pc' ? 'hover' : 'click'"
+							:placement="device === 'pc' ? 'right-start' : 'top'"
+							padding="0px 0px"
+							content="content"
+							v-for="(item ,i) in info.SubDetailList.slice(3, 6)"
+							:key="i"
+						>
+							<div class="icon-box">
+								<div class="icon" :style="{ 'background-image': `url(${item.Icon})` }"></div>
+								<div class="name">{{ item.Name }}</div>
+							</div>
+							<div class="tip" slot="content">
+								<div class="title">{{ item.Name }}</div>
+								<div class="des" v-html="item.Content"></div>
+							</div>
+						</Poptip>
+					</div>
 				</ul>
 			</div>
 		</div>
+		<Modal
+      v-model="explainModal"
+      :title="explanTitle"
+			class-name="vertical-center-modal"
+			:footer-hide="footerHide"
+		>{{ explan }}</Modal>
 	</LayoutCell>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 export default {
   props: {
     title: {
@@ -77,7 +91,23 @@ export default {
       default: () => {}
     }
   },
+	data() {
+		return {
+			level1: '',
+			level2: '',
+			footerHide: true,
+			explainModal: false,
+			explanTitle: '',
+			explan: ''
+		}
+	},
+	created() {
+		this.level1 = this.getLocale('talent.level1')
+		this.level2 = this.getLocale('talent.level2')
+	},
 	computed: {
+    ...mapState(['device', 'lang', 'API']),
+    ...mapGetters(['getLocale']),
 		htmlContent() {
 			let content = this.$props.info.Content;
 			if(content) {
@@ -86,6 +116,26 @@ export default {
 				return ''
 			}
 		}
+	},
+	mounted() {
+    // 监听v-html渲染的e标签的点击事件, 请求相关解释
+    this.listenExplanation()
+  },
+	methods: {
+		...mapActions(['getTip']),
+    listenExplanation() {
+      this.$refs.affix.addEventListener('click', async (e) => {
+        if(e.target.nodeName === 'E') {
+          const id = e.target.id;
+          if(id || id == 0) {
+						const explan = await this.getTip(id)
+						this.explanTitle = e.target.innerText
+						this.explan = explan.replaceAll('\\n', '\n').split('\n').join('')
+						this.explainModal = true
+          }
+        }
+      })
+    }
 	}
 }
 </script>
@@ -140,20 +190,26 @@ export default {
 		width: 68px;
 		position: relative;
 		margin-top: 10px;
-		>div {
-			position: absolute;
-			&:nth-child(1) {
-				top: 0;
-			}
-			&:nth-child(2) {
-				top: 119px;
-			}
-			&:nth-child(3) {
-				top: 238px;
+		>.title {
+			display: none;
+		}
+
+		.poptip-icon {
+			>div {
+				position: absolute;
+				&:nth-child(1) {
+					top: 0;
+				}
+				&:nth-child(2) {
+					top: 119px;
+				}
+				&:nth-child(3) {
+					top: 238px;
+				}
 			}
 		}
 
-		li {
+		.icon-box {
 			cursor: pointer;
 			>.icon {
 				width: 68px;
@@ -208,6 +264,18 @@ export default {
 				margin-top: 16px;
 				white-space: initial;
 				padding: 0 8px;
+	      ::v-deep p {
+	        display: inline-block !important;
+	      }
+	      ::v-deep e {
+	        display: inline-block !important;
+	        color: #50aad4;
+	        font-size: 15px;
+	        margin: 0 3px;
+	        border-bottom: 1px solid #50aad4;
+	        line-height: 18px;
+	        cursor: pointer;
+	      }
 			}
 		}
 	}
@@ -330,6 +398,180 @@ export default {
 					&[name="2"] { border-bottom: 2px solid #666; }
 				}
 			}
+		}
+	}
+}
+
+// ::v-deep .ivu-poptip-popper {
+// 	z-index: 1;
+// }
+::v-deep .vertical-center-modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	.ivu-modal{
+		top: 0;
+	}
+}
+::v-deep .ivu-modal-mask {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+::v-deep .ivu-modal-content {
+	background-color: #111;
+	border-radius: 0 30px;
+	color: #fff;
+	padding: 0 12px;
+}
+::v-deep .ivu-modal-header {
+	border-bottom: 1px solid #333;
+}
+::v-deep .ivu-modal-header-inner {
+	color: #FFC130;
+	font-weight: 700;
+}
+::v-deep .ivu-modal-body {
+	padding: 30px 16px;
+}
+
+@media screen and (max-width: 828px) {
+	.line-box {
+		display: none;
+	}
+
+	.talent-item {
+		height: auto;
+		padding: 0;
+		flex-direction: column;
+		.info {
+			width: 100%;
+			padding: vw(45px);
+			display: flex;
+			justify-content: flex-start;
+			.logo {
+				width: vw(120px);
+				height: vw(120px);
+				>.icon {
+					width: vw(90px);
+					height: vw(90px);
+				}
+			}
+			.desc {
+				flex: 1;
+				margin-top: 0;
+				margin-left: vw(60px);
+				.name {
+					font-size: vw(32px);
+				}
+				.content {
+					font-size: vw(24px);
+					line-height: vw(32px);
+					margin-top: vw(18px);
+				}
+			}
+		}
+		.talent-child {
+			width: 100%;
+			// height: vw(294px);
+			margin: 0;
+			padding: vw(45px) vw(36px) vw(45px);
+			display: flex;
+			justify-content: flex-start;
+			>.title {
+				display: block;
+				width: vw(178px);
+				font-size: vw(28px);
+				color: #fff;
+				font-weight: 700;
+				padding: vw(33px) vw(30px) 0 0;
+			}
+
+			.poptip-icon {
+				width: vw(460px);
+				display: flex;
+				justify-content: space-between;
+				>div {
+					position: inherit;
+					top: 0;
+				}
+			}
+
+			.icon-box {
+				>.icon {
+					width: vw(100px);
+					height: vw(100px);
+					border: vw(6px) solid #111;
+				}
+				>.name {
+					font-size: vw(24px);
+					width: vw(100px);
+					line-height: vw(26px);
+					margin-top: vw(18px);
+				}
+			}
+
+			&[name="1"] {
+				margin-left: 0;
+				background-color: #292929;
+			}
+			&[name="2"] {
+				margin-left: 0;
+			}
+
+			.tip {
+				width: vw(588px);
+				padding: vw(46px) vw(43px);
+				border-radius: 0 vw(20px);
+				.title {
+					border-bottom: vw(2px) solid #333;
+					padding: 0 vw(16px) vw(15px);
+					font-size: vw(36px);
+				}
+				.des {
+					font-size: vw(24px);
+					margin-top: vw(32px);
+					padding: 0 vw(16px);
+		      ::v-deep e {
+		        font-size: vw(26px);
+		        margin: 0 vw(6px);
+		        border-bottom: vw(2px) solid #50aad4;
+		        line-height: vw(32px);
+		      }
+				}
+			}
+		}
+	}
+
+	::v-deep .ivu-modal {
+		width: vw(588px) !important;
+	}
+
+	::v-deep .ivu-modal-content {
+		border-radius: 0 vw(50px);
+		padding: 0 vw(27px);
+	}
+	::v-deep .ivu-modal-header {
+		border-bottom: vw(2px) solid #333;
+		padding: 0 vw(16px);
+	}
+	::v-deep .ivu-modal-header-inner {
+		color: #FFC130;
+		font-size: vw(36px);
+		height: vw(100px);
+		line-height: vw(105px);
+	}
+	::v-deep .ivu-modal-body {
+		padding: vw(32px) vw(16px) vw(58px);
+		font-size: vw(24px);
+	}
+	::v-deep .ivu-modal-close {
+		top: auto;
+		bottom: vw(-120px);
+		right: 50%;
+		transform: translate3d(50%, 0, 0);
+		.ivu-icon-ios-close {
+			font-size: vw(100px);
+			color: #fff;
+			font-weight: 800;
 		}
 	}
 }

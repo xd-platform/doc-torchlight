@@ -1,6 +1,8 @@
 <template>
     <div class="thumbnail" :class="type" :id="info.Id">
-      <div class="pic" :style="{ 'background-image': `url(${info.Icon})` }"></div>
+      <div :class="`pic rare-${info.RateVal}`">
+				<div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
+			</div>
       <div class="name">{{ info.Name }}</div>
       <slot />
     </div>
@@ -36,13 +38,15 @@ export default {
     transition: all ease-in-out 200ms;
   }
   .pic {
-    width: 95px;
-    height: 95px;
     margin: 16px auto 0;
-    background-color: #111;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 80% 80%;
+    background: #111;
+		.icon {
+			width: 100%;
+			height: 100%;
+	    background-position: center;
+	    background-repeat: no-repeat;
+	    background-size: 80% 80%;
+		}
   }
   .name {
     width: calc(100% - 12px);
@@ -90,5 +94,29 @@ export default {
     }
   }
 
+}
+
+@media screen and (max-width: 828px) {
+	.thumbnail {
+		width: vw(164px);
+		height: vw(202px);
+  	border: vw(2px) solid #222;
+	  &:hover {
+	    border: vw(2px) solid #FFBF00;
+	  }
+		.name {
+	    width: calc(100% - vw(15px));
+	    margin: 0 vw(10px);
+			font-size: vw(20px);
+		}
+
+	  &.inventory {
+  		.pic {
+				width: vw(116px);
+				height: vw(116px);
+      	border-radius: 0 vw(15px) 0 vw(15px);
+			}
+		}
+	}
 }
 </style>

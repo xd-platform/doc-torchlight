@@ -11,4 +11,11 @@
   width: 1200px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 828px) {
+	.inner-wrapper {
+		width: 100%;
+  	padding-top: vw(33px);
+	}
+}
 </style>

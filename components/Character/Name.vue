@@ -1,5 +1,6 @@
 <template>
 	<div class="name-box" v-if="info.theme && Object.keys(info.theme).length != 0">
+		<div class="bgMobile" :style="getRetina(info.theme.bgMobile)"></div>
 		<div
 			class="name-bg"
 			:style="getRetina(info.theme.nameBg, info.theme.nameBg_2x)"
@@ -27,6 +28,9 @@ export default {
 
 <style lang="scss" scoped>
 .name-box {
+	.bgMobile {
+		display: none;
+	}
 	.name-bg {
 		width: 100%;
 		height: 105px;
@@ -46,6 +50,39 @@ export default {
 			@include imgBg('player.png', 'player_2x.png');
 			margin-left: 40px;
 			cursor: pointer;
+		}
+	}
+}
+
+@media screen and (max-width: 828px) {
+	.name-box {
+		position: relative;
+		width: 100%;
+		height: vw(466px);
+		// margin-bottom: vw(10px);
+		.bgMobile {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-position: 0 center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.name-bg {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: vw(190px);
+			background-position: center;
+			background-size: cover;
+			.name {
+				font-size: vw(110px);
+				margin-left: vw(28px);
+			}
 		}
 	}
 }
