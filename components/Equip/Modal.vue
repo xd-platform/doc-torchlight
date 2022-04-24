@@ -21,7 +21,7 @@
 				<div v-if="info.DetailAffix" class="detail">
 					<equip-affix-list :info="info.DetailAffix"></equip-affix-list>
 				</div>
-				<div v-if="info.Desc" class="desc" v-html="info.Desc">{{getLocale}}</div>
+				<div v-if="info.Desc" class="desc" v-html="info.Desc.replaceAll('\\n', '\n')"></div>
 			</div>
     </div>
   </div>
@@ -140,7 +140,9 @@ export default {
       border-top: none;
       font-size: 12px;
       color: #DBB97C;
-      white-space: normal;
+    	white-space: break-spaces;
+			font-weight: bold;
+			font-style: italic;
     }
   }
 }

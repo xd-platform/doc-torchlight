@@ -71,6 +71,8 @@ export default {
     color: #DBB97C;
     background-color: #222;
     white-space: break-spaces;
+		font-weight: bold;
+		font-style: italic;
   }
 }
 

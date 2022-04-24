@@ -43,7 +43,8 @@ export default {
   plugins: [
     {src: '~plugins/viewUI', ssr: true},
 		{src: '~plugins/swiper', client: true},
-		{src: '~/plugins/lottie', client: true}
+		{src: '~/plugins/lottie', client: true},
+		{src:"~/plugins/vconsole", ssr: false}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

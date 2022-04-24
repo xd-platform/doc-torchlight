@@ -21,7 +21,7 @@ const LOCALES = {
 		},
 		character: {
 			introduction: 'Introduction',
-			characteristic: 'Characteristic',
+			characteristic: 'Hero Trait',
 			advanced: 'Advanced Features'
 		},
 		talent: {

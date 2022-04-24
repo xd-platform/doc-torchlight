@@ -108,6 +108,7 @@ export default {
 	    width: calc(100% - vw(15px));
 	    margin: 0 vw(10px);
 			font-size: vw(20px);
+			line-height: vw(24px);
 		}
 
 	  &.inventory {
