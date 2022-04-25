@@ -3,7 +3,10 @@
       <div :class="`pic rare-${info.RateVal}`">
 				<div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
 			</div>
-      <div class="name">{{ info.Name }}</div>
+      <div
+				class="name"
+				:class="{ ellipsis: info.Name.length > 16, normal: info.Name.length <= 16 }"
+			>{{ info.Name }}</div>
       <slot />
     </div>
 </template>
@@ -49,20 +52,29 @@ export default {
 		}
   }
   .name {
-    width: calc(100% - 12px);
-    margin: 0 6px;
-    flex: 1;
+		width: calc(100% - 28px);
     color: #fff;
     font-size: 13px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+		line-height: 16px;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+		&.normal {
+    	flex: 1;
+    	margin: 0 14px;
+    	align-items: center;
+	    justify-content: center;
+	    text-align: center;
+		}
+		&.ellipsis {
+			height: 35px;
+    	margin: 6px 14px 0;
+			text-align: center;
+			display: -webkit-inline-box;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    -webkit-line-clamp: 2;
+	    -webkit-box-orient: vertical;
+		}
   }
   ::v-deep a {
     position: absolute;
@@ -99,16 +111,23 @@ export default {
 @media screen and (max-width: 828px) {
 	.thumbnail {
 		width: vw(164px);
-		height: vw(202px);
+		height: vw(220px);
   	border: vw(2px) solid #222;
 	  &:hover {
 	    border: vw(2px) solid #FFBF00;
 	  }
 		.name {
-	    width: calc(100% - vw(15px));
-	    margin: 0 vw(10px);
+	    width: calc(100% - vw(40px));
 			font-size: vw(20px);
 			line-height: vw(24px);
+
+			&.normal {
+	    	margin: 0 vw(20px);
+			}
+			&.ellipsis {
+				height: vw(52px);
+	    	margin: vw(11px) vw(20px) 0;
+			}
 		}
 
 	  &.inventory {

@@ -4,7 +4,7 @@
       <div v-if="info.BaseAffix && info.BaseAffix.length != 0" class="base">
         <div class="title">{{ locale.baseAffix }}</div>
         <ul class="baseAffix">
-          <li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc"></li>
+          <li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc || affix"></li>
         </ul>
       </div>
       <div v-if="info.DetailAffix && info.DetailAffix.length != 0" class="detail">

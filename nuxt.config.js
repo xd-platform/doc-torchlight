@@ -44,7 +44,7 @@ export default {
     {src: '~plugins/viewUI', ssr: true},
 		{src: '~plugins/swiper', client: true},
 		{src: '~/plugins/lottie', client: true},
-		{src:"~/plugins/vconsole", ssr: false}
+		// {src:"~/plugins/vconsole", ssr: false}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -58,7 +58,8 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+		'@nuxtjs/google-gtag'
   ],
 
   styleResources: {
@@ -79,5 +80,17 @@ export default {
   server: {
     port: 3001, // default: 3000
     host: '0.0.0.0' // default: localhost
-  }
+  },
+
+	'google-gtag': {
+		id: 'UA-16408836-19',
+		config: {
+				anonymize_ip: true, // anonymize IP
+				send_page_view: false, // might be necessary to avoid duplicated page track on page reload
+				// linker: {
+				//   domains: ['domain.com','domain.org']
+				// }
+		},
+		debug: true, // enable to track in dev mode
+	}
 }

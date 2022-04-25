@@ -197,6 +197,7 @@ export default {
 		  margin-bottom: vw(30px);
 			li {
 				height: vw(56px);
+				line-height: vw(54px);
 				padding: 0 vw(30px);
 				font-size: vw(24px);
 				margin: 0 vw(10px) vw(10px) 0;

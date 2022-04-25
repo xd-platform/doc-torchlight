@@ -59,7 +59,6 @@ export default {
 						this.SETSCALE(this.scale)
 					}
 				}else {
-					console.log(_height)
 					// this.wrapperStyle = { height: `calc(${_height} - 23.6714975845vw)` }
 					// console.log(this.wrapperStyle)
 					this.SETDEVICE('app')

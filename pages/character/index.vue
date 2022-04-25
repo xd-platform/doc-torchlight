@@ -49,6 +49,7 @@ export default {
         loop: true,
 				autoplay: false,
 				slidesPerView: 3,
+				slidesPerGroup: 3,
         mousewheel: true,
         lazy: {
           loadPrevNext: true,
