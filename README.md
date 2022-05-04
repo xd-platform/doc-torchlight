@@ -1,10 +1,13 @@
-# torchlight_wiki
+# Torchlight Doc
 
 ## 资料
 词缀及描述配置语法: https://confluence.xindong.com/pages/viewpage.action?pageId=622685480  
 Figma: https://www.figma.com/file/ErKaMxV50xhFOv9YsWfDOO/%E8%B5%84%E6%96%99%E7%AB%99?node-id=1272%3A74783  
 Slack: https://xindong.slack.com/archives/C02Q6R29F6K  
 接口：https://confluence.xindong.com/pages/viewpage.action?pageId=647398819  
+
+CF测试: https://torchlight-doc-test.xd-cf-2022.workers.dev  
+正式: https://torchlight-doc.xd.com  
 
 ## Build Setup
 
