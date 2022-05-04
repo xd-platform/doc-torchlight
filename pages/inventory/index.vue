@@ -14,6 +14,7 @@
     <!-- 主体内容 -->
     <LayoutCardList type="thumbnail" class="content">
       <Poptip
+				style="position: relative;"
         trigger="hover"
         placement="right-start"
         padding="0px 0px"

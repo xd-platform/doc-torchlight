@@ -46,9 +46,9 @@ export default {
   position: fixed;
   top: 0;
   left: 50%;
-  margin-left: -50vw;
-  width: 100vw;
-  height: 100vh;
+  margin-left: -50%;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

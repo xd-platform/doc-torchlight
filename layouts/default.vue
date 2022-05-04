@@ -1,5 +1,5 @@
 <template>
-  <div id="App">
+  <div id="App" :class="{ 'in-scale': inScale, 'in-default': !inScale }" :style="appStyle">
     <Nav />
     <div class="wrapper">
       <nuxt/>
@@ -16,7 +16,8 @@ export default {
 			tamp: 0,
 			now: 0,
 			scale: 1,
-			// wrapperStyle: { height: 'calc(100vh - 23.6714975845vw)' }
+			appStyle: {},
+			inScale: false
 		}
 	},
 	computed: {
@@ -41,40 +42,51 @@ export default {
   methods: {
     ...mapMutations(['SETLANG', 'SETDEVICEPIXELRATIO', 'SETENV', 'SETDEVICE', 'SETSCALE', 'SETCLIENTSIZE']),
 		handleResize() {
-			this.now = new Date().getTime()
-			if(this.now - this.tamp > 100) {
+			setTimeout(() => {
+				this.now = new Date().getTime()
+				if(this.now - this.tamp > 100) {
+					const _height = document.documentElement.clientHeight
+					const _width = document.documentElement.clientWidth
+					if(_width > 828) {
+						this.SETDEVICE('pc')
 
-				const _height = document.documentElement.clientHeight
-				const _width = document.documentElement.clientWidth
-				if(_width > 828) {
-					this.SETDEVICE('pc')
+						if(_height !== this.clientHeight) {
+							if(_height > 1080) {
+								this.scale = _height / 1080
+							}else {
+								this.scale = 1
+							}
 
-					if(_height !== this.clientHeight) {
-						if(_height > 1080) {
-							this.scale = _height / 1080
-						}else {
-							this.scale = 1
+							this.SETSCALE(this.scale)
 						}
 
+						if(_width < 1300) {
+							let scaleWidth = _width / 1300
+							console.log(scaleWidth)
+							this.inScale = true
+							this.appStyle = { transform: `scale(${scaleWidth})`, height: `${_height / scaleWidth}px` }
+						}else {
+							this.inScale = false
+							this.appStyle = {}
+						}
+					}else {
+						this.SETDEVICE('app')
+
+						this.scale = 1
 						this.SETSCALE(this.scale)
+
+						this.inScale = false
+						this.appStyle = {}
 					}
-				}else {
-					// this.wrapperStyle = { height: `calc(${_height} - 23.6714975845vw)` }
-					// console.log(this.wrapperStyle)
-					this.SETDEVICE('app')
 
-					this.scale = 1
-					this.SETSCALE(this.scale)
+					this.tamp = this.now
+
+					this.SETCLIENTSIZE({
+						width: _width,
+						height: _height
+					})
 				}
-
-				this.tamp = this.now
-
-				this.SETCLIENTSIZE({
-					width: _width,
-					height: _height
-				})
-				// console.log(this.clientWidth, this.clientHeight)
-			}
+			}, 0)
 		},
   }
 }
@@ -85,13 +97,21 @@ export default {
 
 #App {
   position: relative;
-  width: 100%;
-  height: 100vh;
   background-image: url($bg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+
+	&.in-default {
+	  width: 100%;
+	  height: 100vh;
+	}
+	&.in-scale {
+		width: 1300px;
+	  height: 100vh;
+		transform-origin: 0 0;
+	}
   &::before {
     content: '';
     position: absolute;
@@ -103,7 +123,7 @@ export default {
   }
   >.wrapper {
     width: 100%;
-    height: calc(100vh - 76px);
+    height: calc(100% - 76px);
     margin-top: 74px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -116,7 +136,7 @@ export default {
   	background-image: url($bgMobile);
 		>.wrapper {
 			margin-top: vw(196px);
-    	height: calc(100vh - vw(196px));
+    	height: calc(100% - vw(196px));
 		}
 	}
 }

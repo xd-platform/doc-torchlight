@@ -21,6 +21,7 @@
 				</div>
 				<div class="tools">
 	        <Poptip
+						style="position: relative;"
 	          :trigger="device === 'pc' ? 'hover' : 'click'"
 	          placement="bottom"
 	          content="content"
