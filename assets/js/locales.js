@@ -10,6 +10,7 @@ const LOCALES = {
 		inventory: {
 			needLevel: 'NeedLevel',
 			baseAffix: 'BaseAffix',
+			baseAttr: 'BaseAttr',
 			equipName: 'EquipName',
 			equipDesc: 'EquipDesc',
 			dropLocation: 'DropLocation',
@@ -40,6 +41,7 @@ const LOCALES = {
 		inventory: {
 			needLevel: '需求等级',
 			baseAffix: '基础词缀',
+			baseAttr: '基础属性',
 			equipName: '装备名称',
 			equipDesc: '装备描述',
 			dropLocation: '掉落地点',

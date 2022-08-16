@@ -7,22 +7,19 @@
           :title="locale.equipName"
           :info="NameInfo"
         ></DetailName>
-        <EquipDesc
-          :title="locale.equipDesc"
-          :info="DescInfo"
-        ></EquipDesc>
+        <EquipDesc :title="locale.equipDesc" :info="DescInfo"></EquipDesc>
       </div>
       <div class="grid">
-				<DetailLocation
-					v-if="LocationInfo && LocationInfo.length !== 0"
+        <DetailLocation
+          v-if="LocationInfo && LocationInfo.length !== 0"
           :title="locale.dropLocation"
           :info="LocationInfo"
-				></DetailLocation>
-				<DetailAffix
-					v-if="AffixInfo && AffixInfo.length !== 0"
+        ></DetailLocation>
+        <DetailAffix
+          v-if="AffixInfo && AffixInfo.length !== 0"
           :title="locale.relatedAffixes"
           :info="AffixInfo"
-				></DetailAffix>
+        ></DetailAffix>
       </div>
     </div>
   </LayoutWrapper>
@@ -42,12 +39,13 @@ export default {
         Type: "",
       },
       DescInfo: {
-        BaseAffix: '',
-        DetailAffix: '',
-        Desc: ''
+        BaseAttr: "",
+        BaseAffix: "",
+        DetailAffix: "",
+        Desc: "",
       },
-			LocationInfo: [],
-			AffixInfo: []
+      LocationInfo: [],
+      AffixInfo: [],
     };
   },
   computed: {
@@ -63,21 +61,21 @@ export default {
       };
     },
   },
-	watch: {
-		lang() {
-   		this.getDetail(this.id);
-		}
-	},
+  watch: {
+    lang() {
+      this.getDetail(this.id);
+    },
+  },
   beforeMount() {
     this.id = $nuxt.$route.query.id;
     this.getDetail(this.id);
   },
   methods: {
-		...mapMutations(['SETLOADING']),
+    ...mapMutations(["SETLOADING"]),
     getDetail(id) {
-			this.SETLOADING(true)
+      this.SETLOADING(true);
       this.$axios
-        .get(this.API['inventory']['detail'], {
+        .get(this.API["inventory"]["detail"], {
           params: {
             Language: this.lang,
             Uid: id,
@@ -89,28 +87,29 @@ export default {
 
             // 为了便于组件使用，统一传入参数
             this.NameInfo = {
-              Icon: info.Icon || '',
-              Name: info.Name || '',
-							RateVal: info.RateVal || '0',
-              Level: this.locale.needLevel + " " + info.NeedLevel || '',
-              Type: info.WeaponType || '',
+              Icon: info.Icon || "",
+              Name: info.Name || "",
+              RateVal: info.RateVal || "0",
+              Level: this.locale.needLevel + " " + info.NeedLevel || "",
+              Type: info.WeaponType || "",
             };
 
             this.DescInfo = {
+              BaseAttr: info.BaseAttr || [],
               BaseAffix: info.BaseAffix || [],
               DetailAffix: info.DetailAffix || [],
-              Desc: info.Desc || '',
+              Desc: info.Desc || "",
             };
 
-						this.LocationInfo = info.DropPlace || []
+            this.LocationInfo = info.DropPlace || [];
 
-						this.AffixInfo = info.RandomAffixPool || []
+            this.AffixInfo = info.RandomAffixPool || [];
           }
-					this.SETLOADING(false)
+          this.SETLOADING(false);
         })
-				.catch(() => {
-					this.SETLOADING(false)
-				})
+        .catch(() => {
+          this.SETLOADING(false);
+        });
     },
   },
 };
@@ -119,26 +118,26 @@ export default {
 <style lang="scss" scoped>
 .inventory-detail {
   color: #fff;
-  >.inner {
+  > .inner {
     padding-bottom: 60px;
-	  display: flex;
-	  justify-content: space-between;
-	  .grid {
-	    width: 594px;
-	  }
+    display: flex;
+    justify-content: space-between;
+    .grid {
+      width: 594px;
+    }
   }
 }
 
 @media screen and (max-width: 828px) {
-	.inventory-detail {
-		>.inner {
-    	padding-bottom: vw(100px);
-			flex-direction: column;
-			.grid {
-				width: vw(750px);
-				margin: 0 auto;
-			}
-		}
-	}
+  .inventory-detail {
+    > .inner {
+      padding-bottom: vw(100px);
+      flex-direction: column;
+      .grid {
+        width: vw(750px);
+        margin: 0 auto;
+      }
+    }
+  }
 }
 </style>

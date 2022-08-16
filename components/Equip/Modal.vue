@@ -1,53 +1,77 @@
 <template>
   <div class="inventory-detail">
     <div :class="`icon-box rare-${info.RateVal}`">
-      <div class="icon" :style="{ 'background-image': `url(${info.Icon})` }"></div>
+      <div
+        class="icon"
+        :style="{ 'background-image': `url(${info.Icon})` }"
+      ></div>
     </div>
     <div class="detail-box">
-			<div class="inner">
-				<div class="info">
-					<div class="name">{{ info.Name }}</div>
-					<div class="des">
-						<div class="needLevel">{{ locale.needLevel }} {{ info.NeedLevel }}</div>
-						<div class="type">{{ info.WeaponType }}</div>
-					</div>
-				</div>
-				<div class="base" v-if="info.BaseAffix && info.BaseAffix.length !== 0">
-					<div class="title">{{ locale.baseAffix }}</div>
-					<ul class="baseAffix">
-						<li v-for="(affix, i) in info.BaseAffix" :key="i" v-html="affix.desc || affix"></li>
-					</ul>
-				</div>
-				<div v-if="info.DetailAffix" class="detail">
-					<equip-affix-list :info="info.DetailAffix"></equip-affix-list>
-				</div>
-				<div v-if="info.Desc" class="desc" v-html="info.Desc.replaceAll('\\n', '\n')"></div>
-			</div>
+      <div class="inner">
+        <div class="info">
+          <div class="name">{{ info.Name }}</div>
+          <div class="des">
+            <div class="needLevel">
+              {{ locale.needLevel }} {{ info.NeedLevel }}
+            </div>
+            <div class="type">{{ info.WeaponType }}</div>
+          </div>
+        </div>
+        <div class="base" v-if="info.BaseAttr && info.BaseAttr.length !== 0">
+          <div class="title">{{ locale.baseAttr }}</div>
+          <ul class="baseAttr">
+            <li
+              v-for="(attr, i) in info.BaseAttr"
+              :key="i"
+              v-html="attr.desc || attr"
+            ></li>
+          </ul>
+        </div>
+        <div class="base" v-if="info.BaseAffix && info.BaseAffix.length !== 0">
+          <div class="title">{{ locale.baseAffix }}</div>
+          <ul class="baseAffix">
+            <li
+              v-for="(affix, i) in info.BaseAffix"
+              :key="i"
+              v-html="affix.desc || affix"
+            ></li>
+          </ul>
+        </div>
+        <div v-if="info.DetailAffix" class="detail">
+          <equip-affix-list :info="info.DetailAffix"></equip-affix-list>
+        </div>
+        <div
+          v-if="info.Desc"
+          class="desc"
+          v-html="info.Desc.replaceAll('\\n', '\n')"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters } from "vuex";
 
 export default {
   props: {
     info: {
       typeof: Object,
-      default: () => {}
+      default: () => {},
     },
   },
   computed: {
-    ...mapState(['lang']),
-    ...mapGetters(['getLocale']),
+    ...mapState(["lang"]),
+    ...mapGetters(["getLocale"]),
     locale() {
       return {
-        needLevel: this.getLocale('inventory.needLevel'),
-        baseAffix: this.getLocale('inventory.baseAffix')
-      }
-    }
+        needLevel: this.getLocale("inventory.needLevel"),
+        baseAffix: this.getLocale("inventory.baseAffix"),
+        baseAttr: this.getLocale("inventory.baseAttr"),
+      };
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -63,7 +87,7 @@ export default {
     left: 50%;
     margin-left: -38px;
     background: #111;
-    border: 5px solid #0B0B0B;
+    border: 5px solid #0b0b0b;
     .icon {
       background-position: center;
       background-repeat: no-repeat;
@@ -78,20 +102,20 @@ export default {
     background-color: #1a1a1a;
     padding: 11px;
     border-radius: 0 25px;
-		.inner {
+    .inner {
       border: 1px solid #333;
       border-radius: 0 20px;
-			>div {
-      	border-bottom: 1px solid #333;
-				&:last-child {
-					border: none;
-				}
-			}
-		}
+      > div {
+        border-bottom: 1px solid #333;
+        &:last-child {
+          border: none;
+        }
+      }
+    }
     .info {
       padding: 33px 0 12px;
       .name {
-        color: #FFC130;
+        color: #ffc130;
         font-size: 19px;
         font-weight: bolder;
         text-align: center;
@@ -101,7 +125,7 @@ export default {
         display: flex;
         justify-content: center;
         font-size: 12px;
-        color: #BFBFBF;
+        color: #bfbfbf;
         .needLevel,
         .type {
           height: 23px;
@@ -123,7 +147,8 @@ export default {
         font-weight: bolder;
         margin-bottom: 4px;
       }
-      .baseAffix {
+      .baseAffix,
+      .baseAttr {
         font-size: 14px;
         color: #fff;
         ::v-deep p {
@@ -139,10 +164,10 @@ export default {
       padding: 15px 17px 20px;
       border-top: none;
       font-size: 12px;
-      color: #DBB97C;
-    	white-space: break-spaces;
-			font-weight: bold;
-			font-style: italic;
+      color: #dbb97c;
+      white-space: break-spaces;
+      font-weight: bold;
+      font-style: italic;
     }
   }
 }
