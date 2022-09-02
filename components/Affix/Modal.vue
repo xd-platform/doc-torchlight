@@ -7,7 +7,10 @@
             <div class="tier">{{ item.Tier }}</div>
             <div class="name" v-html="item.Affix"></div>
             <div class="extend-box">
-              <ol v-if="item.ExtendArr && item.ExtendArr.length != 0" class="extend">
+              <ol
+                v-if="item.ExtendArr && item.ExtendArr.length != 0"
+                class="extend"
+              >
                 <li v-for="(e, i) in item.ExtendArr" :key="i">{{ e }}</li>
               </ol>
             </div>
@@ -24,21 +27,23 @@ export default {
   props: {
     info: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
-      info_: []
-    }
+      info_: [],
+    };
   },
   computed: {
     infoFilter() {
       this.info_ = Object.assign([], this.$props.info);
-      return this.info_.sort(function(a, b){return a['Tier'] - b['Tier']}); 
-    }
-  }
-}
+      return this.info_.sort(function (a, b) {
+        return a["Tier"] - b["Tier"];
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -79,7 +84,7 @@ export default {
         &:last-child {
           border-bottom: none;
         }
-        >div {
+        > div {
           padding: 15px 10px 8px 10px;
         }
         .tier {
@@ -90,13 +95,13 @@ export default {
         .name {
           width: 280px;
           border-right: 1px solid #333;
-          ::v-deep p {
+          :deep(p) {
             display: inline-block;
           }
         }
         .extend-box {
           // width: 178px;
-					flex: 1;
+          flex: 1;
           .extend {
             display: flex;
             justify-content: flex-start;
@@ -108,7 +113,7 @@ export default {
               border-radius: 5px;
               margin: 0 0 7px 7px;
               color: #000;
-              background-color: #FEB833;
+              background-color: #feb833;
               white-space: nowrap;
             }
           }
@@ -126,51 +131,51 @@ export default {
 }
 
 @media screen and (max-width: 828px) {
-	.cover {
-		.box {
-			width: vw(750px);
-    	box-shadow: 0 0 vw(15px) 0px #141414;
-			.inner {
-				padding: 0;
-			}
-			.content {
-				border: 2px solid #333;
-				font-size: vw(24px);
-				li {
-					border-bottom: vw(2px) solid #333;
-					>div {
-						padding: vw(47px) vw(10px) vw(25px) vw(16px);
-					}
-					.tier {
-						width: vw(65px);
-						border-right: vw(2px) solid #333;
-					}
-					.name {
-						width: vw(400px);
-          	border-right: vw(2px) solid #333;
-					}
-					.extend-box {
-						.extend {
-							li {
-								height: vw(38px);
-								line-height: vw(38px);
-								padding: 0 vw(15px);
-								border-radius: vw(10px);
-								margin: 0 0 vw(16px) vw(16px);
-							}
-						}
-					}
-				}
-			}
-			.close {
-				font-size: vw(100px);
-				top: auto;
-				bottom: vw(-150px);
-				right: 50%;
-				transform: translate3d(50%, 0, 0);
-				color: #fff;
-			}
-		}
-	}
+  .cover {
+    .box {
+      width: vw(750px);
+      box-shadow: 0 0 vw(15px) 0px #141414;
+      .inner {
+        padding: 0;
+      }
+      .content {
+        border: 2px solid #333;
+        font-size: vw(24px);
+        li {
+          border-bottom: vw(2px) solid #333;
+          > div {
+            padding: vw(47px) vw(10px) vw(25px) vw(16px);
+          }
+          .tier {
+            width: vw(65px);
+            border-right: vw(2px) solid #333;
+          }
+          .name {
+            width: vw(400px);
+            border-right: vw(2px) solid #333;
+          }
+          .extend-box {
+            .extend {
+              li {
+                height: vw(38px);
+                line-height: vw(38px);
+                padding: 0 vw(15px);
+                border-radius: vw(10px);
+                margin: 0 0 vw(16px) vw(16px);
+              }
+            }
+          }
+        }
+      }
+      .close {
+        font-size: vw(100px);
+        top: auto;
+        bottom: vw(-150px);
+        right: 50%;
+        transform: translate3d(50%, 0, 0);
+        color: #fff;
+      }
+    }
+  }
 }
 </style>

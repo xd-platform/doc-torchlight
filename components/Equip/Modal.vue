@@ -12,13 +12,16 @@
           <div class="name">{{ info.Name }}</div>
           <div class="des">
             <div class="needLevel">
-              {{ locale.needLevel }} {{ info.NeedLevel }}
+              {{ $t("inventory_needLevel") || "$inventory_needLevel" }}
+              {{ info.NeedLevel }}
             </div>
             <div class="type">{{ info.WeaponType }}</div>
           </div>
         </div>
         <div class="base" v-if="info.BaseAttr && info.BaseAttr.length !== 0">
-          <div class="title">{{ locale.baseAttr }}</div>
+          <div class="title">
+            {{ $t("inventory_baseAttr") || "$inventory_baseAttr" }}
+          </div>
           <ul class="baseAttr">
             <li
               v-for="(attr, i) in info.BaseAttr"
@@ -28,7 +31,9 @@
           </ul>
         </div>
         <div class="base" v-if="info.BaseAffix && info.BaseAffix.length !== 0">
-          <div class="title">{{ locale.baseAffix }}</div>
+          <div class="title">
+            {{ $t("inventory_baseAffix") || "$inventory_baseAffix" }}
+          </div>
           <ul class="baseAffix">
             <li
               v-for="(affix, i) in info.BaseAffix"
@@ -62,14 +67,6 @@ export default {
   },
   computed: {
     ...mapState(["lang"]),
-    ...mapGetters(["getLocale"]),
-    locale() {
-      return {
-        needLevel: this.getLocale("inventory.needLevel"),
-        baseAffix: this.getLocale("inventory.baseAffix"),
-        baseAttr: this.getLocale("inventory.baseAttr"),
-      };
-    },
   },
 };
 </script>
@@ -151,7 +148,7 @@ export default {
       .baseAttr {
         font-size: 14px;
         color: #fff;
-        ::v-deep p {
+        :deep(p) {
           display: inline-block !important;
         }
       }

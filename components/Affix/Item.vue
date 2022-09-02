@@ -1,7 +1,11 @@
 <template>
   <LayoutCell :title="title">
-		<ul v-if="info && info.length != 0" class="inner">
-      <li v-for="(item, i) in info" :key="i" @click="$emit('view', item.AffixDetailList)">
+    <ul v-if="info && info.length != 0" class="inner">
+      <li
+        v-for="(item, i) in info"
+        :key="i"
+        @click="$emit('view', item.AffixDetailList)"
+      >
         <div class="main-affix" v-html="item.MainAffix"></div>
         <ol v-if="item.ExtendArr && item.ExtendArr.length != 0" class="extend">
           <li v-for="(e, i) in item.ExtendArr" :key="i">{{ e }}</li>
@@ -17,25 +21,25 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => ''
+      default: () => "",
     },
     info: {
       type: Array,
-      default: () => []
-    }
-  }
-}
+      default: () => [],
+    },
+  },
+};
 </script>
 
 
 <style lang="scss" scoped>
 .inner {
-	width: 100%;
-	height: 100%;
-  >li:nth-child(even) {
+  width: 100%;
+  height: 100%;
+  > li:nth-child(even) {
     background-color: #292929;
   }
-  >li {
+  > li {
     display: flex;
     justify-content: space-between;
     padding: 13px 20px 6px 20px;
@@ -45,7 +49,7 @@ export default {
       flex: 1;
       white-space: inherit;
       color: #ddd;
-      ::v-deep p {
+      :deep(p) {
         display: inline-block;
       }
     }
@@ -62,7 +66,7 @@ export default {
         border-radius: 5px;
         margin: 0 0 7px 7px;
         color: #000;
-        background-color: #FEB833;
+        background-color: #feb833;
         white-space: nowrap;
       }
     }
@@ -73,22 +77,22 @@ export default {
 }
 
 @media screen and (max-width: 828px) {
-	.inner {
-		>li {
-			padding: vw(28px) vw(40px) vw(14px) vw(28px);
-    	font-size: vw(24px);
-			.extend {
-				max-width: vw(250px);
-				margin-left: vw(50px);
-				li {
-					height: vw(38px);
-					line-height: vw(38px);
-					padding: 0 vw(15px);
-					border-radius: vw(10px);
-					margin: 0 0 vw(16px) vw(16px);
-				}
-			}
-		}
-	}
+  .inner {
+    > li {
+      padding: vw(28px) vw(40px) vw(14px) vw(28px);
+      font-size: vw(24px);
+      .extend {
+        max-width: vw(250px);
+        margin-left: vw(50px);
+        li {
+          height: vw(38px);
+          line-height: vw(38px);
+          padding: 0 vw(15px);
+          border-radius: vw(10px);
+          margin: 0 0 vw(16px) vw(16px);
+        }
+      }
+    }
+  }
 }
 </style>

@@ -11,14 +11,18 @@
     <MenuBar level="3" :menu="menuLevel3" v-model="id_level3"></MenuBar>
 
     <!-- 主体内容 -->
-    <LayoutCardList v-if="Object.keys(cardFilter).length != 0" type="large" class="content">
+    <LayoutCardList
+      v-if="Object.keys(cardFilter).length != 0"
+      type="large"
+      class="content"
+    >
       <AffixItem
-        :title="getLocale('affix.prefix')"
+        :title="$t('affix_prefix') || '$affix_prefix'"
         :info="cardFilter['prefix']"
         @view="viewAffixDetail"
       ></AffixItem>
       <AffixItem
-        :title="getLocale('affix.suffix')"
+        :title="$t('affix_suffix') || '$affix_suffix'"
         :info="cardFilter['suffix']"
         @view="viewAffixDetail"
       ></AffixItem>
@@ -53,7 +57,7 @@ export default {
       cardFilter: {},
 
       showModal: false,
-      modalInfo: []
+      modalInfo: [],
     };
   },
   watch: {
@@ -92,22 +96,21 @@ export default {
     },
     lang() {
       // 监听到语言变化，重新请求接口
-      this.emptyData()
-      this.initMenu()
-    }
+      this.emptyData();
+      this.initMenu();
+    },
   },
   computed: {
-    ...mapState(['lang', 'API']),
-    ...mapGetters(["getLocale"]),
+    ...mapState(["lang", "API"]),
   },
   beforeMount() {
     this.initMenu();
   },
   methods: {
-    ...mapActions(['getMenu', 'getList']),
+    ...mapActions(["getMenu", "getList"]),
     async initMenu() {
-      const menu = await this.getMenu('affix');
-      if(menu && menu.length != 0) {
+      const menu = await this.getMenu("affix");
+      if (menu && menu.length != 0) {
         this.menuLevel1 = menu;
         this.id_level1 = menu && menu.length != 0 && menu[0].id;
       }
@@ -115,39 +118,39 @@ export default {
     async reqList(id) {
       this.cardFilter = {
         prefix: [],
-        suffix: []
-      }
-			
-      const list = await this.getList({ nav: 'affix', id: id });
-      if(list && list.length != 0) {
-        list.forEach(item => {
-          if(item.ModifierType == 3) {
-            this.cardFilter.prefix.push(item)
-          }else if(item.ModifierType == 4) {
-            this.cardFilter.suffix.push(item)
+        suffix: [],
+      };
+
+      const list = await this.getList({ nav: "affix", id: id });
+      if (list && list.length != 0) {
+        list.forEach((item) => {
+          if (item.ModifierType == 3) {
+            this.cardFilter.prefix.push(item);
+          } else if (item.ModifierType == 4) {
+            this.cardFilter.suffix.push(item);
           }
         });
       }
     },
     viewAffixDetail(v) {
-      this.modalInfo = v
-      this.showModal = true
+      this.modalInfo = v;
+      this.showModal = true;
     },
     closeAffixDetail() {
-      this.showModal = false
-      this.modalInfo = []
+      this.showModal = false;
+      this.modalInfo = [];
     },
     emptyData() {
-      this.menuLevel1 = []
-      this.id_level1 = ""
-      this.menuLevel2 = []
-      this.idLevel2 = ""
-      this.menuLevel3 = []
-      this.id_level3 = ""
-      this.cardFilter = {}
-      this.showModal = false
-      this.modalInfo = []
-    }
+      this.menuLevel1 = [];
+      this.id_level1 = "";
+      this.menuLevel2 = [];
+      this.idLevel2 = "";
+      this.menuLevel3 = [];
+      this.id_level3 = "";
+      this.cardFilter = {};
+      this.showModal = false;
+      this.modalInfo = [];
+    },
   },
 };
 </script>
