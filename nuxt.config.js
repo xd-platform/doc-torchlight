@@ -1,3 +1,5 @@
+import i18nOptions from './assets/config/i18n';
+
 export default {
   env: {
     API: process.env.NODE_ENV == 'development' ? process.env.DEV_API : process.env.API
@@ -59,8 +61,10 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/style-resources',
-		'@nuxtjs/google-gtag'
+		'@nuxtjs/google-gtag',
+    '@nuxtjs/i18n',
   ],
+  i18n: i18nOptions,
 
   styleResources: {
     scss: [

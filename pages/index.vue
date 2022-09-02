@@ -1,10 +1,10 @@
 <script>
 export default {
-	asyncData({ redirect }) {
-		redirect('/inventory?lang=en_WW')
-	},
-	render(h) {
-		return h('div')
-	}
-}
+  asyncData({ redirect }) {
+    redirect("/inventory");
+  },
+  render(h) {
+    return h("div");
+  },
+};
 </script>

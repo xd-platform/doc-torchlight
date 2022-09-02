@@ -1,4 +1,5 @@
-const apiPre = 'https://wiki.torchlight.xd.com'
+// const apiPre = 'https://wiki.torchlight.xd.com'
+const apiPre = 'http://172.26.147.118:15000'
 const ossPre = 'https://website.xdcdn.net/homepage/torchlight-doc'
 
 const API = {
@@ -26,4 +27,4 @@ const API = {
 	}
 }
 
-export default API;
+export default API; 

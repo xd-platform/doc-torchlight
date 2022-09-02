@@ -4,20 +4,23 @@
       <div class="grid">
         <DetailName
           type="inventory"
-          :title="locale.equipName"
+          :title="$t('inventory_equipName') || '$inventory_equipName'"
           :info="NameInfo"
         ></DetailName>
-        <EquipDesc :title="locale.equipDesc" :info="DescInfo"></EquipDesc>
+        <EquipDesc
+          :title="$t('inventory_equipDesc') || '$inventory_equipDesc'"
+          :info="DescInfo"
+        ></EquipDesc>
       </div>
       <div class="grid">
         <DetailLocation
           v-if="LocationInfo && LocationInfo.length !== 0"
-          :title="locale.dropLocation"
+          :title="$t('inventory_dropLocation') || '$inventory_dropLocation'"
           :info="LocationInfo"
         ></DetailLocation>
         <DetailAffix
           v-if="AffixInfo && AffixInfo.length !== 0"
-          :title="locale.relatedAffixes"
+          :title="$t('inventory_relatedAffixes') || '$inventory_relatedAffixes'"
           :info="AffixInfo"
         ></DetailAffix>
       </div>
@@ -26,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -49,17 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["lang", "device", "API"]),
-    ...mapGetters(["getLocale"]),
-    locale() {
-      return {
-        needLevel: this.getLocale("inventory.needLevel"),
-        equipName: this.getLocale("inventory.equipName"),
-        equipDesc: this.getLocale("inventory.equipDesc"),
-        dropLocation: this.getLocale("inventory.dropLocation"),
-        relatedAffixes: this.getLocale("inventory.relatedAffixes"),
-      };
-    },
+    ...mapState(["languages", "lang", "device", "API"]),
   },
   watch: {
     lang() {
@@ -77,7 +70,7 @@ export default {
       this.$axios
         .get(this.API["inventory"]["detail"], {
           params: {
-            Language: this.lang,
+            Language: this.languages[this.lang]?.code,
             Uid: id,
           },
         })
@@ -90,7 +83,8 @@ export default {
               Icon: info.Icon || "",
               Name: info.Name || "",
               RateVal: info.RateVal || "0",
-              Level: this.locale.needLevel + " " + info.NeedLevel || "",
+              Level:
+                this.$t("inventory_needLevel") + " " + info.NeedLevel || "",
               Type: info.WeaponType || "",
             };
 
