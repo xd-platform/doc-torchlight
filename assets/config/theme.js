@@ -68,21 +68,22 @@ const characterList = [
       "coverMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/youga/coverMobile.png",
       "bgMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/youga/bgMobile.png"
     }
-  },
-  {
-    "id": "1100",
-    "name": "thea",
-    "theme": {
-      "cover": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/cover.png",
-      "cover_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/cover_2x.png",
-      "nameBg": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/nameBg.png",
-      "nameBg_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/nameBg_2x.png",
-      "role": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/role.png",
-      "role_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/role_2x.png",
-      "coverMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/coverMobile.png",
-      "bgMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/bgMobile.png"
-    }
   }
+  // ,
+  // {
+  //   "id": "1100",
+  //   "name": "thea",
+  //   "theme": {
+  //     "cover": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/cover.png",
+  //     "cover_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/cover_2x.png",
+  //     "nameBg": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/nameBg.png",
+  //     "nameBg_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/nameBg_2x.png",
+  //     "role": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/role.png",
+  //     "role_2x": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/role_2x.png",
+  //     "coverMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/coverMobile.png",
+  //     "bgMobile": "https://website.xdcdn.net/homepage/torchlight-doc/hero/thea/bgMobile.png"
+  //   }
+  // }
 ]
 
 
