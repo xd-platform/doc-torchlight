@@ -14,18 +14,18 @@
     <!-- 主体内容 -->
     <LayoutCardList type="thumbnail" class="content">
       <Poptip
-				style="position: relative;"
+        style="position: relative"
         trigger="hover"
         placement="right-start"
         padding="0px 0px"
         content="content"
-				:disabled="device === 'pc' ? false : true"
+        :disabled="device === 'pc' ? false : true"
         v-for="(card, i) in cardList"
         :key="i"
       >
         <CardThumbnail :type="subNav" :info="card">
           <nuxt-link
-            :to="`/${subNav}/detail?id=${card.Id}&lang=${lang}`"
+            :to="`/${subNav}/detail?id=${card.Id}`"
             target="_blank"
           ></nuxt-link>
         </CardThumbnail>
@@ -95,38 +95,38 @@ export default {
     },
     lang() {
       // 监听到语言变化，重新请求接口
-      this.emptyData()
-      this.initMenu()
-    }
+      this.emptyData();
+      this.initMenu();
+    },
   },
   beforeMount() {
     this.initMenu();
   },
   methods: {
-    ...mapActions(['getMenu', 'getList']),
+    ...mapActions(["getMenu", "getList"]),
     async initMenu() {
-      const menu = await this.getMenu('inventory');
-      if(menu && menu.length != 0) {
+      const menu = await this.getMenu("inventory");
+      if (menu && menu.length != 0) {
         this.menuLevel1 = menu;
         this.id_level1 = menu && menu.length != 0 && menu[0].id;
       }
     },
     async reqList(id) {
-			this.cardList = []
-      const list = await this.getList({ nav: 'inventory', id: id });
-      if(list && list.length != 0) {
+      this.cardList = [];
+      const list = await this.getList({ nav: "inventory", id: id });
+      if (list && list.length != 0) {
         this.cardList = list;
       }
     },
     emptyData() {
-      this.menuLevel1 = []
-      this.id_level1 = ""
-      this.menuLevel2 = []
-      this.idLevel2 = ""
-      this.meuuLevel3 = []
-      this.idLevel3 = ""
-      this.cardList = []
-    }
+      this.menuLevel1 = [];
+      this.id_level1 = "";
+      this.menuLevel2 = [];
+      this.idLevel2 = "";
+      this.meuuLevel3 = [];
+      this.idLevel3 = "";
+      this.cardList = [];
+    },
   },
 };
 </script>

@@ -1,22 +1,22 @@
-
-import LOCALES from '@/assets/js/locales';
 import API from '@/assets/js/api';
 import Vue from 'vue';
+import characterList from '@/assets/config/theme';
+import languages from '@/assets/config/languages';
 
 export const state = () => ({
   lang: '',
-  LOCALES: LOCALES,
 	API: API,
   device: '',
 	env: '',
-	loading: true,
+	loading: false,
   // 缓存用
   inventory: {},
   affix: {},
   talent: {},
 	character: {},
-	// 角色配置json
-	characterConfig: [],
+	// 角色配置config
+	characterConfig: characterList,
+	languages: languages,
 	// 屏幕倍率
 	devicePixelRatio: 0,
 	scale: 1,
@@ -40,9 +40,9 @@ export const mutations = {
 	SETDEVICEPIXELRATIO(state, ratio) {
 		state.devicePixelRatio = ratio
 	},
-	SETCHARACTERCONFIG(state, config) {
-		state.characterConfig = config
-	},
+	// SETCHARACTERCONFIG(state, config) {
+	// 	state.characterConfig = config
+	// },
 	SETLOADING(state, bool) {
 		state.loading = bool
 	},
@@ -62,20 +62,6 @@ export const mutations = {
 }
 
 export const getters = {
-  getLocale: ({LOCALES, lang}) => (id) => {
-    let str = ''
-    if(LOCALES[lang]) {
-			str = LOCALES[lang]
-			const id_list = id.split('.')
-			id_list.forEach(item => {
-				str = str[item]
-			});
-    }else {
-      str = ''
-    }
-  
-    return str
-  },
 	getRetina: ({devicePixelRatio}) => (src, src_retina) => {
 		if(devicePixelRatio) {
 			if(src && src_retina) {
@@ -89,7 +75,7 @@ export const getters = {
 	},
 	getCharacterConfig: ({characterConfig}) => (id) => {
 		if(characterConfig && characterConfig.length != 0) {
-			return characterConfig.find((info) => info.id === id)
+			return characterConfig.find((info) => info.id == id)
 		}else {
 			return {}
 		}
@@ -106,7 +92,7 @@ export const actions = {
       response = await this.$axios
         .get(state.API[nav]['menu'], {
           params: {
-            Language: state.lang,
+            Language: state.languages[state.lang]?.code,
           },
         })
         .then((res) => {
@@ -148,7 +134,7 @@ export const actions = {
       response = await this.$axios
         .get(state.API[payload.nav]['list'], {
           params: {
-            Language: state.lang,
+            Language: state.languages[state.lang]?.code,
             ContentList: payload.id,
           },
         })
@@ -169,45 +155,45 @@ export const actions = {
 
     return response;
   },
-	async getTheme({state, commit}, nav) {
-		let response = []
-		let key = ''
-		if(state.lang == 'en_WW') {
-			key = 'themeEn'
-		}else if(state.lang == 'zh_CN') {
-			key = 'theme'
-		}
+	// async getTheme({state, commit}, nav) {
+	// 	let response = []
+	// 	let key = ''
+	// 	if(state.lang == 'en_WW') {
+	// 		key = 'themeEn'
+	// 	}else if(state.lang == 'zh_CN') {
+	// 		key = 'theme'
+	// 	}
 
-		let envKey = ''
-		if(state.env === 'dev') {
-			envKey = '_dev'
-		}
+	// 	let envKey = ''
+	// 	if(state.env === 'dev') {
+	// 		envKey = '_dev'
+	// 	}
 
-		if(state[nav][key+envKey] && state[nav][key+envKey].length != 0) {
-			commit('SETCHARACTERCONFIG', state[nav][key+envKey])
-		}else {
-			commit('SETLOADING', true)
-			response = await this.$axios
-				.get(state.API[nav][key+envKey])
-				.then((res) => {
-					if(res.status == 200 && res.data) {
-						try {
-							const jsonData = JSON.parse(JSON.stringify(res.data))
-							commit('SETCHARACTERCONFIG', jsonData)
-							return jsonData
-						} catch(e) {
-							console.log(e)
-							return []
-						}
-					}
-				})
+	// 	if(state[nav][key+envKey] && state[nav][key+envKey].length != 0) {
+	// 		commit('SETCHARACTERCONFIG', state[nav][key+envKey])
+	// 	}else {
+	// 		commit('SETLOADING', true)
+	// 		response = await this.$axios
+	// 			.get(state.API[nav][key+envKey])
+	// 			.then((res) => {
+	// 				if(res.status == 200 && res.data) {
+	// 					try {
+	// 						const jsonData = JSON.parse(JSON.stringify(res.data))
+	// 						commit('SETCHARACTERCONFIG', jsonData)
+	// 						return jsonData
+	// 					} catch(e) {
+	// 						console.log(e)
+	// 						return []
+	// 					}
+	// 				}
+	// 			})
 			
-			commit('SETLOADING', false)
+	// 		commit('SETLOADING', false)
 
-			const o = { nav: nav, cacheId: key+envKey, content: response || [] }
-			commit('SETCACHE', o)
-		}
-	},
+	// 		const o = { nav: nav, cacheId: key+envKey, content: response || [] }
+	// 		commit('SETCACHE', o)
+	// 	}
+	// },
 	async getTip({state, commit}, id) {
 		let response = ''
 
@@ -217,7 +203,7 @@ export const actions = {
 			response = this.$axios
 				.get(state.API['inventory']['tips'], {
 					params: {
-						Language: state.lang,
+						Language: state.languages[state.lang]?.code,
 						Id: id
 					}
 				})
