@@ -94,7 +94,9 @@ export default {
             this.SETSCALE(this.scale);
 
             this.inScale = false;
-            this.appStyle = {};
+            this.appStyle = {
+              height: `${_height}px`,
+            };
           }
 
           this.tamp = this.now;
