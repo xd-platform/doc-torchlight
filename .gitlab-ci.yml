@@ -29,6 +29,19 @@ build-job:
     - cp dist /data/wwwroot/gitlab-runner/xd-website/homepage/torchlight-doc-nuxt2-$CI_COMMIT_BRANCH/ -rf
 
 
+
+sh /data/wwwroot/oss/deploy.sh homepage torchlight-doc-nuxt2
+
+deploy-oss-job:
+  stage: deploy
+  tags:
+    - ansible-bj
+  only:
+    - master
+  script:
+    - cd /data/wwwroot/oss
+    - sh ./deploy.sh homepage torchlight-doc-nuxt2
+
 deploy-wrangler-job:
   stage: deploy
   tags:
