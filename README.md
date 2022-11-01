@@ -9,6 +9,7 @@ Slack: https://xindong.slack.com/archives/C02Q6R29F6K
 CF测试: https://torchlight-doc-test.xd-cf-2022.workers.dev  
 正式: https://torchlight-doc.xd.com  
 
+git@github.com:xd-platform/doc-torchlight.git
 ## Build Setup
 
 ```bash
